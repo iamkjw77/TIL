@@ -24,9 +24,9 @@
 
 #### [HTML5 콘텐츠 모델]
 - 좀 더 명확한 정보 구조 설계 및 구성을 위해 카테고리를 정의하여 각 요소별로 비슷한 성격을 가지고 있는 것끼리 그룹화
-![CSS Content Model](../images/CSS_content_model)
+<img src="../images/CSS_content_model">
 
-[콘텐츠 모델 참고](https://seulbinim.github.io/WSA/html-basic.html#html4-01-xhtml1-0%EA%B3%BC-html5%EC%9D%98-%EC%B0%A8%EC%9D%B4%EC%A0%90)
+- [콘텐츠 모델 참고](https://seulbinim.github.io/WSA/html-basic.html#html4-01-xhtml1-0%EA%B3%BC-html5%EC%9D%98-%EC%B0%A8%EC%9D%B4%EC%A0%90)
 
 #### [HTML5 아웃라인 알고리즘]
 - 정보구조를 명확히 할 수 있도록 ‘아웃라인 알고리즘’ 이라는 개념이 도입됨
@@ -39,7 +39,7 @@
 - 버전 별로 지원하는 태그가 조금씩 다름
 
 #### [HTML 언어설정]
- <html lang="ko-KR">
+- <html lang="ko-KR">
 - KR : Republic of Korea 지역코드, ko 만 사용하면 한국어를 통칭
 
 #### [웹 접근성, Web Accessibility]
@@ -75,41 +75,41 @@ token의 값은 page, step, location, date, time, true, false(default)으로 정
 
 #### [HTML, CSS 설계]
 1. 구조 분석 단계
-- 3단 : header(네비게이션 포함), contents, footer
-- 4단 : eader, navigation(네비게이션을 따로 분리) ,contents, footer
+    - 3단 : header(네비게이션 포함), contents, footer
+    - 4단 : eader, navigation(네비게이션을 따로 분리) ,contents, footer
 
 2. 논리적 순서생각
-- 사용자의 입장이 되어 흐름을 생각해보자 
-ex) 로그인 창) 아이디 → 비밀번호 → 로그인 상태 유지 → 로그인
+    - 사용자의 입장이 되어 흐름을 생각해보자 
+    - ex) 로그인 창) 아이디 → 비밀번호 → 로그인 상태 유지 → 로그인
 
 3. 시맨틱 마크업
-- 컴퓨터, 브라우저가 잘 이해할 수 있도록 약속하는 것
-- 의미에 맞게 HTML요소를 올바르게 사용하는 것
+    - 컴퓨터, 브라우저가 잘 이해할 수 있도록 약속하는 것
+    - 의미에 맞게 HTML요소를 올바르게 사용하는 것
 
 4. 네이밍(케이스 스타일)
     - 1.케밥-케이스
-    - kebab-case, spinal-case, Train-Case, Lisp-case
-    - 하이픈으로 단어를 연결하는 표기법
-    - HTML 태그의 id, class 속성으로 흔히 사용됨.
+        - kebab-case, spinal-case, Train-Case, Lisp-case
+        - 하이픈으로 단어를 연결하는 표기법
+        - HTML 태그의 id, class 속성으로 흔히 사용됨.
 
     - 2.파스칼 표기법
-    - PascalCase, BackgroundColor, TypeName, PowerPoint
-    - 첫 단어를 대문자로 시작하는 표기법
+        - PascalCase, BackgroundColor, TypeName, PowerPoint
+        - 첫 단어를 대문자로 시작하는 표기법
 
     - 3.스네이크 케이스(뱀 표기법)
-    - snake_case, background_color, type_name
-    - 단어를 밑줄 문자로 구분하는 표기법
+        - snake_case, background_color, type_name
+        - 단어를 밑줄 문자로 구분하는 표기법
 
     - 4.헝가리언 표기법
-    - strName, bBusy, szName
-    - 접두어를 사용하는 표기법
+        - strName, bBusy, szName
+        - 접두어를 사용하는 표기법
 
 #### [CSS 방법론]
 1. BEM(Block Element Modifier)
-- 개발, 디버깅, 유지보수를 위하여 가능한 한 명확하게 네이밍하는 것이 목표
-- 소문자, 숫자만을 조합
-- 조합은 하이픈(-)으로 연결하여 작명
-- 모든 것이 클래스이고, 중첩된 것은 없다.
+    - 개발, 디버깅, 유지보수를 위하여 가능한 한 명확하게 네이밍하는 것이 목표
+    - 소문자, 숫자만을 조합
+    - 조합은 하이픈(-)으로 연결하여 작명
+    - 모든 것이 클래스이고, 중첩된 것은 없다.
 
 ```html
 <button class="button">
@@ -139,7 +139,7 @@ ex) 로그인 창) 아이디 → 비밀번호 → 로그인 상태 유지 → �
   color: #900;
 }
 ```
-[출처](https://junwoo45.github.io/2019-08-29-BEM/)
+- [출처](https://junwoo45.github.io/2019-08-29-BEM/)
 
 #### 2. OOCSS(Object Oriented CSS), 객체지향 CSS
 - 구조와 모양으로 분리
@@ -187,13 +187,13 @@ ex) 로그인 창) 아이디 → 비밀번호 → 로그인 상태 유지 → �
 #### [CSS Box Model]
 - 문서의 레이아웃을 계산할 때, 브라우저의 렌더링 엔진은 표준 CSS 기본 박스 모델에 따라 각각의 요소를 사각형 박스로 표현
 - 하나의 박스는 네 부분(영역)으로 이루어진다. 각 영역을 콘텐츠 영역, 안쪽 여백(패딩) 영역, 테두리 영역, 그리고 바깥 여백(마진) 영역이라고 부른다.
-![CSS Box Model](../images/CSS_box_model)
+<img src="../images/CSS_box_model">
 
 #### [브라우저별 접두사]
--ms : IE → -webkit으로 바뀜
--webkit :chrome
--moz : 파이어폭스
--o : 오페라 → -webkit으로 바뀜
+1. -ms : IE → -webkit으로 바뀜
+2. -webkit :chrome
+3. -moz : 파이어폭스
+4. -o : 오페라 → -webkit으로 바뀜
 
 #### [DOM]
 - Document Object Model(문서 객체 모델)
