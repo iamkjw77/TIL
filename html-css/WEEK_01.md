@@ -506,7 +506,7 @@ clearfix::after {
 
 
 #### [background: linear-gradient() 함수]
-- background: linear-gradient() 함수는 두 개 이상의 색이 직선을 따라 점진적으로 변화하는 이미지를 생성한다.
+- 두 개 이상의 색이 직선을 따라 점진적으로 변화하는 이미지를 생성
 - 속성값
   1. `<side-or-corner>` 
   - 그라디언트 축의 시작점, 지정할 경우 to 이후 최대 두 개의 방향을 나타내는 키워드를 사용할 수 있다. 하나는 수평방향(left or right)이고, 다른 하나는 수직방향(top or bottom)이다. 방향 키워드의 순서는 상관하지 않으며, 기본값은 to bottom이다.
@@ -529,6 +529,23 @@ linear-gradient(45deg, blue, red);
 /* 우하단에서 좌상단으로, 파랑 시작 빨강 종료 그라디언트 */
 linear-gradient(to left top, blue, red);
 ```
+
+#### [background: radial-gradient() 함수]
+- 원형 그라데이션 효과를 만들 수 있다. 
+- CSS3에서 추가된 것으로 IE10이상 사용 가능
+- 사용법 
+- radial-gradient( shape size at position, color1, color2, ,,, , color3)
+- 속성값
+  - shape : 원모양 인지 타원모양인지 선택
+  - size : 크기를 정함
+  - position : 중심의 위치를 정함
+  - color : 색지정
+
+```css
+background: radial-gradient(ellipse at right top, red, yellow)
+/* 오른쪽 상단에서 시작하는 그라디언트*/
+```
+
 [참고, 화면에서 만든 그라디언트를 코드로 생성, CSS Gradient Generator](https://www.colorzilla.com/gradient-editor/)
 
 #### [CSS currentColor]
@@ -578,7 +595,7 @@ a, input, button {
 
 
 
-[:focus-within]
+#### [:focus-within]
 - Dropdown 메뉴처럼 마우스를 올려야 표시되는 메뉴도 :focus-within을 이용해 접근성을 높일 수 있다.
 
 ```css
