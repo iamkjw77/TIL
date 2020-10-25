@@ -207,3 +207,140 @@ token의 값은 page, step, location, date, time, true, false(default)으로 정
 
 
 ---
+<details open>
+<summary>2일차</summary>
+<div markdown="2">
+
+#### [BFC, Block Formatting Context]
+- 웹 페이지를 렌더링하는 시각적 CSS의 일부, 블록박스의 레이아웃이 발생하는 지점과 플로팅 요소의 상호작용 범위를 결정하는 범위
+- 레이아웃 안에 작은 레이아웃
+- 요소를 세로로 배치하는 영역
+
+```html
+<div class="container">
+  <div class="float-left">
+  </div>
+</div>
+```
+
+```css
+<style>
+  .container {
+    color: #833ab4;
+    border: 5px dashed;
+    margin: 20px;
+    padding: 10px;
+    border-radius: 5px;
+  }
+  .float-left {
+    float: left;
+    background-color: #833ab450;
+    padding: 15px;
+    height: 100px;
+  }
+</style>
+```
+- .float-left 영역이 container를 벗어난다. block 레벨 요소(container)가 float 된 자식 요소를 포함하지 않기 때문에 발생한 현상이다. 
+- 이때, .container에 overflow: hidden(or auto)을 넣으면 container에 BFC가 생성되었다. 이제는 float요소의 높이가 container의 높이에 영향을 준다. BFC는 그 안에 만들어진 요소를 포함하기 때문이다.
+
+    ##### [자신의 BFC가 생성되는 경우]
+    - html root 태그 (body 태그는 만들어지지 않는다)
+    - none을 제외한 float
+    - position: fixed, absolute
+    - display: inline-block, table, table-cell, table-caption
+    - overflow: visible을 제외한 모든 값
+    - display: flow-root (일부 브라우저만 동작함)
+    - display: flex, inline-flex, grid, inline-grid
+
+[출처](https://blueshw.github.io/2020/05/17/know-css-block-formatting-context/)
+
+
+#### [IFC, Inline Formatting Context]
+- 요소를 가로로 배치하는 영역
+
+#### [color 속성]
+- sRGB 색 공간의 색을 표현하며, 추가로 알파 채널 투명도 값도 가질 수 있어 자신이 가리키는 색상과 배경이 어떻게 합성되어야 하는지 지정할 수 있다.
+- 사용법 : 
+    1. 키워드 사용(blue, transparent 등)
+    2. RGB 3차원 좌표계 사용(# + 16진수 표기법 또는 rgb(), rgba()의 함수형 표기법)
+    3. HSL 실린더형 좌표계 사용(hsl(), hsla()의 함수형 표기법)
+
+    ##### [color 값 키워드]
+    - transparent : 완전히 투명색으로 색을 입힌 항목의 뒤편이 보인다. 기술적으로 transparent는 rbga(0, 0, 0, 0)의 짧은 이름
+    - currentColor : 요소의 color 속성값을 나타낸다. 이를 통해 다른 속성이 color 속성값을 따라가도록 설정할 수 있다. color 속성의 값으로 currentColor 키워드를 사용하면, 값을 상속받은 color 속성에서 대신 가져온다.
+
+#### [box-sizing 속성]
+- 요소의 너비와 높이를 계산하는 방법을 지정
+- CSS 박스 모델 기본값에서, 요소의 테두리나 안쪽 여백이 있으면 너비와 높이가 더해져 화면에 그려진다. 따라서 크기를 설정할　때, 원하는 크기를 얻으려면 테두리나 안쪽 여백을 고려해야 한다.
+- content-box : 기본값 (content 상자 기준)
+- border-box : 테두리와 안쪽 여백의 크기도 요소의 크기로 고려한다. (border 기준)
+width, height = border + padding + content
+
+#### [justify-content 속성]
+- flexbox의 주기능 중 하나는 (주축과 교차축으로 표현되는) flex container 공간 안에 flex항목들을 정렬하고 여유 공간을 항목 간에 분배하는 것
+- justify-content 속성은 주축에 따라 flex 항목 행을 정렬하는 방식을 지정
+- 속성값
+    - flex-start : flex 항목 행 내의 항목들이 flex 컨테이너의 시작선에서부터 정렬(기본값)
+    - flex-end : flex 항목 행의 마지막 항목이 flex container의 끝선에 정렬
+    - center : flex 항목들이 flex 항목 행의 가운데 정렬
+    - space-between : 주축 방향 여유 공간을 flex항목 사이 공간에 균등 배분
+    - space-around : 시작선과 끝선, flex 항목 간 공간을 균등 배분에 고려하여, 시작선 및 끝선과 flex 항목 간의 공간 크기를 1로 배분한다면, flex 항목 사이의 공간은 2로 배분 
+    - space-evenly : 여유 공간을 flex 항목 사이의 공간 및 시작선과 끝선과 flex 항목 간의 공간에 모두 균등하게 배분
+ 
+[flex 게임](https://flexboxfroggy.com/#ko)
+
+#### [position 속성]
+- 문서 상에 요소를 배치하는 방법을 지정, top, right, bottom, left 속성이 요소를 배치할 최종위치를 결정
+- 속성값
+    1. static : 요소를 normal-flow(일반적인 흐름)에 따라 배치, top, right, bottom, left, z-index 속성이 아무런 영향을 주지않는 기본값
+
+    2. relative :  요소를 normal-flow에 따라 배치하고, 자기 자신을 기준으로 top, right, bottom, left 값에 따라 offset을 적용
+        - ※ offset : 동일 오브젝트 안에서 오브젝트 처음부터 주어진 요소나 지점까지의 변위차를 나타내는 정수형
+        - ex) 문자열 S의 배열이 ‘abcdef’ 라면 에서 ‘c’문자는 문자열 S의 시작점에서 2의 오프셋을 지닌다고 할 수 있다. 
+
+    3. absolute : 요소를 normal-flow(일반적인 흐름)에서 제거하고, 페이지 레이아웃에 공간도 남아있지 않는다. 대신 가장 가까운 위치 지정 요소에 대해 상대적으로 배치한다. 단 조사 중 위치 조정 요소가 없다면 초기 컨테이닝 블록을 기준으로 삼는다. 최종 위치는 top, right, bottom, left값이 지정한다.
+
+    4. fixed : 요소를 normal-flow(일반적인 흐름)에서 제거하고, 페이지 레이아웃에 공간도 배정하지 않는다. 대신, 스크린의 뷰포트(viewport)를 기준으로 한 위치에 배치된다. 즉, 스크롤되어도 움직이지 않는 고정된 자리를 가지게 된다.
+
+    5. sticky : 요소를 normal-flow(일반적인 흐름)에 따라 배치되고, top, right, bottom, left 속성들의 값을 기준으로 flow root 및 해당 element를 포함하는 containing block에 대한 상대적(relative) 위치에 배치된다. 그래서 sticky로 position을 지정했는데 top, right, bottom, left 속성이 주어지지 않으면 static으로 배치되는 위치와 같다.
+
+    ##### [fixed와 sticky의 차이점]
+    - fixed와 sticky 둘 다 스크롤을 하더라도 보이는 공통점을 가지고 있는데, 이 두 position의 차이점은 fixed는 문서의 흐름을 따르지 않고 뷰포트를 기준으로 배치가 되는 반면 sticky는 문서의 흐름(normal flow)을 따르면서 containing box를 기준으로 상대적인 위치에 배치된다. 따라서 fixed를 쓰면 요소들이 겹쳐 보일 수 있는 상황이 나올 수 있는 반면 sticky를 쓰면 그러한 상황을 예방할 수 있다. 
+
+#### [float 속성]
+- float : ‘띄우다’라는 뜻으로 원래 웹페이지에서 이미지를 어떻게 띄워서 텍스트와 함께 배치할 것인가에 대한 속성
+- 속성값
+    - inherit : 부모 요소에서 상속
+    - left : 요소가 자신의 포함(containing) 블록의 좌측에 부동(float)해야 함을 나타내는 키워드
+    - right : 요소가 자신의 포함 블록의 우측에 부동해야 함을 나타내는 키워드
+    - none : 요소가 부동하지 않아야 함을 나타내는 키워드
+    - inline-start : 요소가 자신의 포함 블록의 시작쪽에 부동해야함을 나타내는 키워드이다. ltr(left to right) 스크립트 상에서 왼쪽 그리고 rtl(right to left) 스크립트 상에서는 오른쪽
+    - inline-end : 요소가 자신의 포함 블록의 끝쪽에 부동해야함을 나타내는 키워드이다. 즉, ltr(left to right) 상에서 오른쪽 그리고 rtl(right to left)상에서는 왼쪽
+
+#### [float 해제]
+1. 가상요소 ::after 사용
+- float 속성을 적용한 요소의 부모요소에 ::after를 사용, inline의 가상요소를 만듦.
+```css
+clearfix::after {
+	content: “”;
+	display: block;
+	clear: both;
+	/*clear: both는 display: block만 사용가능*/
+}
+```
+- 장점 : clearfix가 사용되는 곳마다 클래스를 가져다 조립하면됨.
+
+2. overflow 사용
+- float를 가진 요소의 부모 요소에 overflow: hidden 또는 overflow: auto를 적용
+- overflow 속성을 사용할 경우 부모요소에 BFC가 생성되어, float 요소의 높이가 container 높이에 영향을 준다. BFC는 그 안에 만들어진 모든 요소를 포함하기 때문이다. (overflow 속성을 주면 넘치는 영역을 관리해야하기 때문에 우선적으로 자신의 높이를 알아야함)
+
+3. 부모요소에게 height를 주는 경우
+- float를 가진 요소의 부모 요소에 min-height 속성을 주는 경우, 높이가 fix되어 있기 때문에 콘텐츠 삽입시 문제가 될 수 있다.
+
+
+</div> 
+</details>
+
+
+---
+
