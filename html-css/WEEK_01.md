@@ -24,9 +24,7 @@
 
 #### [HTML5 콘텐츠 모델]
 - 좀 더 명확한 정보 구조 설계 및 구성을 위해 카테고리를 정의하여 각 요소별로 비슷한 성격을 가지고 있는 것끼리 그룹화
-<img src="../images/CSS_content_model">
-
-- [콘텐츠 모델 참고](https://seulbinim.github.io/WSA/html-basic.html#html4-01-xhtml1-0%EA%B3%BC-html5%EC%9D%98-%EC%B0%A8%EC%9D%B4%EC%A0%90)
+![CSS Content Model](https://seulbinim.github.io/WSA/images/markup/content-model.png)
 
 #### [HTML5 아웃라인 알고리즘]
 - 정보구조를 명확히 할 수 있도록 ‘아웃라인 알고리즘’ 이라는 개념이 도입됨
@@ -39,7 +37,9 @@
 - 버전 별로 지원하는 태그가 조금씩 다름
 
 #### [HTML 언어설정]
-- <html lang="ko-KR">
+```html
+<html lang="ko-KR">
+```
 - KR : Republic of Korea 지역코드, ko 만 사용하면 한국어를 통칭
 
 #### [웹 접근성, Web Accessibility]
@@ -187,7 +187,7 @@ token의 값은 page, step, location, date, time, true, false(default)으로 정
 #### [CSS Box Model]
 - 문서의 레이아웃을 계산할 때, 브라우저의 렌더링 엔진은 표준 CSS 기본 박스 모델에 따라 각각의 요소를 사각형 박스로 표현
 - 하나의 박스는 네 부분(영역)으로 이루어진다. 각 영역을 콘텐츠 영역, 안쪽 여백(패딩) 영역, 테두리 영역, 그리고 바깥 여백(마진) 영역이라고 부른다.
-<img src="../images/CSS_box_model">
+![CSS Box Model](https://codinglead.github.io/images/box-model.png)
 
 #### [브라우저별 접두사]
 1. -ms : IE → -webkit으로 바뀜
