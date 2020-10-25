@@ -343,4 +343,290 @@ clearfix::after {
 
 
 ---
+<details open>
+<summary>3일차</summary>
+<div markdown="3">
 
+#### [웹 접근성을 고려한 텍스트 숨김처리]
+- 콘텐츠의 영역마다 제목을 지정함으로써 스크린리더 등 보조기기 사용자가 웹 페이지를 이용하면서 콘텐츠를 이해하는데 도움을 받을 수 있다. 이렇게 heading 태그를 이용하여 각 영역에 제목을 입력하면 시각장애인의 사이트 탐색이 용이하고, 사이트의 컨텐츠에 대한 이해를 높일 수 있기 때문에 텍스트를 넣어주는데 디자인상 필요없으므로 숨김처리를 해야한다.
+
+- 텍스트를 숨기는 방법
+  1. display: none
+  - 이 값을 주게 되면, 영역에서 아예 사라지게 된다. 따라서 화면에서 안보일 뿐만 아니라 보조기기나 검색엔진이 접근하지 못하게 되어 스크린리더 사용자는 해당 요소의 텍스트를 들을 수 없다. 마찬가지로 input type=“hidden” 이나 visibility: hidden 속성 또한 화면에서 보이지 않게 처리되지만 웹 접근성을 전혀 고려하지 않은 방법이다.
+
+  2. 요소의 크기를 0으로 하기
+  ```css
+  .offset{
+    width: 0;
+    height: 0;
+    font-size: 0;
+    line-height: 0;
+  }
+  ```
+  - 요소의 크기를 0으로 만들면 화면에서 보이지 않지만, 일부 스크린리더의 경우 해당요소를 무시해서 읽지 않을 수 있기 때문에 접근성을 고려한다면 좋은 방법이 아니다.
+
+  3. 불투명도(opacity)를 0으로 하기
+  ```css
+  .offset{
+    opacity: 0;
+  }
+  ```
+  - 이경우도 모바일이나 스크린리더에서 읽지 않으므로 좋지 않은 방법이다.
+
+  4. text-indent : -9999px; 이용해서 화면에서 밀어내기
+  - 이 방법은 form 또는 link와 같은 요소에 사용할 경우, 포커싱 되었을 때, 스크린 밖에 위치해 있기 때문에 정확한 위치를 표시할 수 없어 혼란을 줄 수 있고, SEO(검색 엔진 최적화)에도 좋지 않은 영향을 미칠 수 있다.
+
+  5. position을 이용해서 화면에서 밀어내기
+  ```css
+  .offscreen {
+	  position: absolute;
+	  top: -9999px;
+	  overflow: hidden;
+  }
+  ```
+  - 이 방법은 스크린리더가 차례대로 웹을 탐색하다가 .offscreen 클래스가 적용된 영역을 읽을 때 top: -9999px; 속성값이 적용되면서 화면 스크롤이 상단으로 이동한다. 스크린리더가 읽는 곳이 화면에 보이지 않게 되면서 이용자는 콘텐츠를 이해하기 어렵게 된다. 때문에 이방법도 웹 접근성이 떨어지는 방법이다.
+
+6. clip-path를 이용해서 숨기기
+
+  - clip-path는 지정된 클리핑 범위의 바깥 부분을 숨겨주는 속성이다.
+  ```css
+  .a11y-hidden {
+	  position: absolute;
+  /* 레이아웃에 영향을 주지 않에 normal flow에서 해당 영역을 없앤다. */
+	  width: 1px;
+	  height: 1px;
+  /* width, height 값을 최소한의 크기로 조절한다. */
+	  margin: -1px;
+  /* 화면상 아예 안나오게 한다. */
+	  overflow: hidden;
+  /* 1px이 넘는 텍스트는 보이지 않음 */
+	  clip-path: polygon(0 0, 0 0, 0 0);
+  /* 클리핑 범위를 모두 0으로 지정해서 요소를 숨긴다. */
+  /* clip-path: inset(50%)를 해도 보이지 않는다. */
+	  clip: rect(0,0,0,0);
+	  clip: rect(0 0 0 0);
+  /* clip-path 속성이 IE11이하에서는 지원하지 않기 때문에 하위호환성을 위해 사용*/ 
+  /* IE 구형 브라우저에서는 ,를 인식하지 못할 수 있기 때문에 ,가 없는 값도 사용*/
+  }
+  ```
+  - 이 방법은 화면에서 요소를 숨기고, 스크린 리더가 해당요소의 텍스트를 읽을 수 있으며 보조기기가 접근했을 때 화면 스크롤의 움직임을 막을 수 있다.
+  - tip. .a11y-hidden 클래스를 만들고, 접근성을 고려하여 요소를 숨겨야 할 경우 클래스를 가져다 사용하자
+
+[참고](https://velog.io/@ursr0706/%EC%9B%B9-%EC%A0%91%EA%B7%BC%EC%84%B1%EC%9D%84-%EA%B3%A0%EB%A0%A4%ED%95%98%EC%97%AC-%ED%85%8D%EC%8A%A4%ED%8A%B8-%EC%88%A8%EA%B8%B0%EA%B8%B0)
+
+
+
+#### [clip-path 속성]
+- 클리핑 : 다른 파트에서 정의한 요소의 일부를 제거하는 것을 말한다.
+- 요소의 클리핑 범위를 지정한다. 클리핑 범위 안의 부분은 보여지고, 바깥은 숨겨진다.
+- SVG 대신 CSS 클립 패스를 활용할 수 있지만, IE, Edge는 현재 지원하지 않는다. (IE12부터 지원)
+
+[그 외 다양한 클리핑 범위](https://bennettfeely.com/clippy/)
+
+#### [clip 속성]
+- 이미지나 도형 등을 클리핑할 때 사용, IE8도 지원
+- 클리핑 효과를 주기 위해서는 속성을 부여하는 개체의 position 속성이 absolute여야 한다.
+- clip 속성은 사각형을 통한 클리핑 지원, clip-path는 다양한 도형을 통한 클리핑을 지원
+- rect가 받는 인자는 마스킹되는 영역을 정의하는 것으로, (top, right, bottom, left)로 정의
+- CSS만을 활용해서 도넛 그래프 등을 만들 때 유용하다.
+
+[참고](https://blog.hyungsub.com/entry/CSS-clip-%EC%86%8D%EC%84%B1)
+
+#### [CSS 상속]
+- CSS의 3대 개념 : `상속`, `종속 Cascading`, `명시도(우선순위)`
+- 상속(Inheritance) : 상위(부모, 조상)요소에 적용된 속성을 하위(자식, 자손)요소가 물려받는 것을 의미한다. 
+- 모든 속성이 상속되는 것이 아니고, 상속이 되는 것가 되지 않는 것이 있다.
+- 상속이 되는 속성 : `visibility`, `opacity`, `font`, `color`, `line-height`, `text-align`, `white-space` 등
+- 상속이 되지 않는 속성 : width, height, margin, padding, border, box-sizing, display, background, vertical-align, text-decoration, position, offset(top, right, bottom, left), z-index, overflow, float 등
+- color는 상속되는 속성으로서 자식요소는 물론 자손요소까지 적용된다. 하지만, button처럼 요소에 따라 상속 받지 않는 경우도 존재한다. 이런 경우(상속되지 않는 경우) 상속받지 않는 요소 또는 상속되지 않는 속성에 inherit 키워드를 사용하여 명시적으로 상속 받을 수 있다.
+
+#### [캐스케이딩, Cascading]
+- 요소는 하나 이상의 CSS 선언에 영향을 받을 수 있다. 이때 충돌을 피하기 위해 CSS 적용 우선순위가 필요한데 이를 캐스케이딩(Cascading Order)이라고 한다.
+- 캐스케이딩에는 3가지 규칙이 있다.
+
+  ##### [중요도]
+  - CSS가 어디 선언 되었는지에 따라서 우선순위가 달라진다.
+  1. head 요소 내의 style 요소
+  2. head 요소 내의 style 요소 내의 @import문
+  3. <link>로 연결된 CSS파일
+  4. <link>로 연결된 CSS파일 내의 @import문
+  5. 브라우저 디폴트 스타일시트
+
+  ##### [명시도]
+  - 대상을 명확하게 특정할수록 명시도가 높아지고 우선순위가 높아진다.
+  - !important > 인라인 스타일 > 아이디 선택자 > 클래스/어트리뷰트/가상 선택자 > 태그 선택자 > 전체 선택자 > 상위 요소에 의해 상속된 속성
+
+  ##### [선언순서]
+  - 선언된 순서에 따라 우선순위가 적용된다. 즉, 나중에 선언된 스타일이 우선 적용된다.
+
+#### [tabindex]
+- tab키를 이용해 요소를 순차적으로 포커스 탐색할 순서를 지정
+- 대화형(Interactive Content)는 기본적으로 코드 순서대로 탭 순서가 지정
+- 비대화형 콘텐츠에 tabindex=“0”을 지정하여 대화형 콘텐츠와 같이 탭순서를 사용
+- tabindex=“-1”을 통해 포커스는 가능하지만, 탭순서에서 제외 가능
+- tabindex=“1” 이상의 양수 값은 논리적 흐름을 방해하기 때문에 비추천
+
+  ##### [대화형 콘텐츠]
+  - 사용자와의 상호작용을 위해 특별하게 설계된 요소를 포함
+  - a, button, datalist, embed, iframe, keygen, label, select, textarea 등
+  - <audio> controls 속성을 가진 경우
+  - <img> usemap 속성을 가진 경우
+  - <input> type 속성이 hidden이 아닌 경우
+  - <menu> type 속성이 toolbar에 속한 경우
+  - <object> usemap 속성을 가진 경우
+  - <video> controls 속성을 가진 경우
+
+#### [button 속성]
+- 선택 가능한 버튼을 지정
+- display : inline-block
+- box-sizing: border-box, 브라우저별로 크기는 같지만 padding, border가 다름(padding의 재정의가 필요)
+- 속성값
+  - autofocus 속성 : 페이지가 로드될 때 자동으로 포커스(문서 내 고유해야함)
+  - disabled 속성 : 버튼을 비활성화
+  - form 속성 : <form>의 id 속성값(해당 <form>의 후손이 아닐 경우만)
+  - name 속성 : 폼 데이터와 함께 전송되는 버튼의 이름
+  - type 속성 : 버튼의 타입, button, reset, submit(기본값은 submit)
+
+#### [box-shadow 속성]
+- 요소의 테두리를 감싼 그림자 효과를 추가한다.
+- box-shadow: offset-x offset-y blur-radius spread-radius color;
+- 콘텐트 상자크기에 영향을 주지 않는다.
+
+#### [text-shadow 속성]
+- text에 그림자를 추가한다.
+- text-shadow: offset-x offset-y blur-radius color
+
+#### [background: linear-gradient() 함수]
+- background: linear-gradient() 함수는 두 개 이상의 색이 직선을 따라 점진적으로 변화하는 이미지를 생성한다.
+- 속성값
+  1. <side-or-corner> 
+  - 그라디언트 축의 시작점, 지정할 경우 to 이후 최대 두 개의 방향을 나타내는 키워드를 사용할 수 있다. 하나는 수평방향(left or right)이고, 다른 하나는 수직방향(top or bottom)이다. 방향 키워드의 순서는 상관하지 않으며, 기본값은 to bottom이다.
+  - to top, to bottom, to left, toright 값은 0deg, 180deg, 270deg, 90deg와 같다.
+
+  2. <angle>
+  - 그라디언트 축의 방향, 0deg는 to top과 같다. 0이상의 값을 지정하면 축이 시계방향으로 돌아간다.
+
+  3. <linear-color-stop>
+  - 색상 정지점의 <color>값과 하나 혹은 두 개 선택적인 정지점 위치(각각 그라디언트 축 위의 % 또는 length)
+
+  4. color-hint 
+  - 두 인접한 색상 정지점 사이에서 그라디언트가 진행하는 방식을 지정하는 힌트이다. 길이는 두 정지점 간의 길이에서 어느 지점에 그 중간색이 도달해야 하는지 지정한다. 생략할 경우 가운데 중간색에 도달
+
+- 예제
+```css
+/* 45도 기울어진 파랑 시작 빨강 종료 그라디언트 */
+linear-gradient(45deg, blue, red);
+
+/* 우하단에서 좌상단으로, 파랑 시작 빨강 종료 그라디언트 */
+linear-gradient(to left top, blue, red);
+```
+[참고, 화면에서 만든 그라디언트를 코드로 생성, CSS Gradient Generator](https://www.colorzilla.com/gradient-editor/)
+
+#### [CSS currentColor]
+- CSS3에서 도입된 개념으로 currentColor 키워드가 설정되면, color값이 상속됨
+```css
+div {
+	color: red;
+	border: 5px solid currentColor;
+	box-shadow: 0 0 5px solid currentColor;
+}
+```
+#### [focus-visible]
+- 접근성 높은 웹사이트를 만들기 위해 고려해야 하는 것 중 하나는 키보드‘만’ 이용해도 사이트를 정상적으로 이용할 수 있어야한다. 시각장애나 신체장애를 가진 사용자는 키보드(혹은 그와 비슷한 장치)를 이용해 웹사이트를 이용해야 하는 경우가 많기에, 키보드로 선택한 요소에 하이라이트를 줄 필요가 있다. 
+
+```css
+a, input, button {
+	outline: 0;
+}
+
+:focus {
+	outline: 0;
+}
+/* 위 CSS코드와 같이 특정 요소나 :focus의 outline을 지워버리는 방식은 키보드만으로 브라우저를 조작해야하는 사람을 완전히 배제해버리는 디자인이므로 지양하자. */
+```
+- focus-visible의 추가로, 간단하게 디자인과 접근성을 살릴 수 있게 되었다. 이 클래스는 :focus와 달리 키보드로 해당 요소를 선택해야만 적용된다.
+
+```css
+:focus-visible {
+	outline: 3px solid #aaa;
+}
+
+:focus:not(:focus-visible) {
+	outline: 0;
+	/* :focus-visible이 아닌 :focus만 outline: 0 적용*/
+}
+```
+- 아직 :focus-visible을 지원하는 브라우저가 많지 않기 때문에 WICG의 focus visibloe을 이용하면 지원범위를 넓힐 수 있다. 라이브러리만 추가하면 CSS는 상술한 내용과 크게 다르지 않다.
+```css
+	.js-focus-visible :focus:not(.focus-visible) {
+    		outline: none;
+	}
+```
+[참고, WICG의 focus visible](https://github.com/WICG/focus-visible)
+[출처](https://marshall-ku.com/web/tips/focus-visible%EB%A1%9C-%EC%A0%91%EA%B7%BC%EC%84%B1-%EB%86%92%EC%9D%B4%EA%B8%B0)
+
+
+[:focus-within]
+- Dropdown 메뉴처럼 마우스를 올려야 표시되는 메뉴도 :focus-within을 이용해 접근성을 높일 수 있다.
+
+```css
+.dropdown{
+	display: none;
+}
+
+.dropdown:hover{
+	display: block;
+}
+
+.dropdown.hover{
+	display: block;
+}
+```
+- Dropdown 메뉴 안에 있는 요소에 outline을 아무리 추가해도 마우스를 올리지 않으면 메뉴가 표시조차 되지 않으니, 키보드론 절대로 선택할 수 없는 요소가 탄생해버린다. 심지어 display: none이 아니라 opacity: 0등으로 숨겨두었다면 키보드로 선택은 되지만 보이지 않는 요소가 탄생한다.
+
+```css
+.dropdown:focus,
+.dropdown:focus-within {
+    display: block;
+/*해당 메뉴에 포커스가 가거나. 해당 메뉴의 자식에 포커스가 가면 메뉴를 표시하는 방법*/
+}
+```
+
+#### [white-space 속성]
+- 요소가 공백문자를 처리하는 법을 지정
+- 속성값
+|                | 개행문자 | 스페이스, 탭 | 자동 줄바꿈 | 줄 끝의 공백 |
+| -------------- | -------- | ------------ | ----------- | ------------ |
+| `normal`       | 병합     | 병합         | O           | 제거         |
+| `nowrap`       | 병합     | 병합         | X           | 제거         |
+| `pre`          | 유지     | 유지         | X           | 유지         |
+| `pre-wrap`     | 유지     | 유지         | O           | 넘침         |
+| `pre-line`     | 유지     | 병합         | O           | 제거         |
+| `break-spaces` | 유지     | 유지         | O           | 줄 바꿈      |
+
+
+#### [icon 삽입 방법]
+1. 가상요소를 이용한 삽입
+```css
+.sub-menu a::before {
+    content: '\f192';
+    /* ‘\’가 있으면 기본적으로 스크린 리더기에서 읽히지 않음 */
+    font-family: 'fontello';
+    display: inline-block;
+    /* width값을 가지기 위하여 display: inline-block */
+    /* text-decoration: inherit; */
+    width: 1em;
+    margin-right: .2em;
+}
+```
+
+2. `<span>` 이용한 삽입
+```html
+<span class="icon-right-open" aria-hidden="true"></span>
+<!-- aria-hidden="true"을 줘서 스크린 리더기에서도 읽히지 않게 -->
+```
+
+</div> 
+</details>
+
+---
