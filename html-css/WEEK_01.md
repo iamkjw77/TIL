@@ -354,6 +354,7 @@ clearfix::after {
   1. display: none
   - 이 값을 주게 되면, 영역에서 아예 사라지게 된다. 따라서 화면에서 안보일 뿐만 아니라 보조기기나 검색엔진이 접근하지 못하게 되어 스크린리더 사용자는 해당 요소의 텍스트를 들을 수 없다. 마찬가지로 input type=“hidden” 이나 visibility: hidden 속성 또한 화면에서 보이지 않게 처리되지만 웹 접근성을 전혀 고려하지 않은 방법이다.
 
+
   2. 요소의 크기를 0으로 하기
   ```css
   .offset{
@@ -365,6 +366,7 @@ clearfix::after {
   ```
   - 요소의 크기를 0으로 만들면 화면에서 보이지 않지만, 일부 스크린리더의 경우 해당요소를 무시해서 읽지 않을 수 있기 때문에 접근성을 고려한다면 좋은 방법이 아니다.
 
+
   3. 불투명도(opacity)를 0으로 하기
   ```css
   .offset{
@@ -373,8 +375,10 @@ clearfix::after {
   ```
   - 이경우도 모바일이나 스크린리더에서 읽지 않으므로 좋지 않은 방법이다.
 
+
   4. text-indent : -9999px; 이용해서 화면에서 밀어내기
   - 이 방법은 form 또는 link와 같은 요소에 사용할 경우, 포커싱 되었을 때, 스크린 밖에 위치해 있기 때문에 정확한 위치를 표시할 수 없어 혼란을 줄 수 있고, SEO(검색 엔진 최적화)에도 좋지 않은 영향을 미칠 수 있다.
+
 
   5. position을 이용해서 화면에서 밀어내기
   ```css
@@ -385,6 +389,7 @@ clearfix::after {
   }
   ```
   - 이 방법은 스크린리더가 차례대로 웹을 탐색하다가 .offscreen 클래스가 적용된 영역을 읽을 때 top: -9999px; 속성값이 적용되면서 화면 스크롤이 상단으로 이동한다. 스크린리더가 읽는 곳이 화면에 보이지 않게 되면서 이용자는 콘텐츠를 이해하기 어렵게 된다. 때문에 이방법도 웹 접근성이 떨어지는 방법이다.
+
 
 6. clip-path를 이용해서 숨기기
 
@@ -476,6 +481,7 @@ clearfix::after {
   - <object> usemap 속성을 가진 경우
   - <video> controls 속성을 가진 경우
 
+
 #### [button 속성]
 - 선택 가능한 버튼을 지정
 - display : inline-block
@@ -487,29 +493,32 @@ clearfix::after {
   - name 속성 : 폼 데이터와 함께 전송되는 버튼의 이름
   - type 속성 : 버튼의 타입, button, reset, submit(기본값은 submit)
 
+
 #### [box-shadow 속성]
 - 요소의 테두리를 감싼 그림자 효과를 추가한다.
 - box-shadow: offset-x offset-y blur-radius spread-radius color;
 - 콘텐트 상자크기에 영향을 주지 않는다.
 
+
 #### [text-shadow 속성]
 - text에 그림자를 추가한다.
 - text-shadow: offset-x offset-y blur-radius color
 
+
 #### [background: linear-gradient() 함수]
 - background: linear-gradient() 함수는 두 개 이상의 색이 직선을 따라 점진적으로 변화하는 이미지를 생성한다.
 - 속성값
-  1. <side-or-corner> 
+  1. `<side-or-corner>` 
   - 그라디언트 축의 시작점, 지정할 경우 to 이후 최대 두 개의 방향을 나타내는 키워드를 사용할 수 있다. 하나는 수평방향(left or right)이고, 다른 하나는 수직방향(top or bottom)이다. 방향 키워드의 순서는 상관하지 않으며, 기본값은 to bottom이다.
   - to top, to bottom, to left, toright 값은 0deg, 180deg, 270deg, 90deg와 같다.
 
-  2. <angle>
+  2. `<angle>`
   - 그라디언트 축의 방향, 0deg는 to top과 같다. 0이상의 값을 지정하면 축이 시계방향으로 돌아간다.
 
-  3. <linear-color-stop>
+  3. `<linear-color-stop>`
   - 색상 정지점의 <color>값과 하나 혹은 두 개 선택적인 정지점 위치(각각 그라디언트 축 위의 % 또는 length)
 
-  4. color-hint 
+  4. `<color-hint>`
   - 두 인접한 색상 정지점 사이에서 그라디언트가 진행하는 방식을 지정하는 힌트이다. 길이는 두 정지점 간의 길이에서 어느 지점에 그 중간색이 도달해야 하는지 지정한다. 생략할 경우 가운데 중간색에 도달
 
 - 예제
@@ -544,6 +553,7 @@ a, input, button {
 }
 /* 위 CSS코드와 같이 특정 요소나 :focus의 outline을 지워버리는 방식은 키보드만으로 브라우저를 조작해야하는 사람을 완전히 배제해버리는 디자인이므로 지양하자. */
 ```
+
 - focus-visible의 추가로, 간단하게 디자인과 접근성을 살릴 수 있게 되었다. 이 클래스는 :focus와 달리 키보드로 해당 요소를 선택해야만 적용된다.
 
 ```css
@@ -556,6 +566,7 @@ a, input, button {
 	/* :focus-visible이 아닌 :focus만 outline: 0 적용*/
 }
 ```
+
 - 아직 :focus-visible을 지원하는 브라우저가 많지 않기 때문에 WICG의 focus visibloe을 이용하면 지원범위를 넓힐 수 있다. 라이브러리만 추가하면 CSS는 상술한 내용과 크게 다르지 않다.
 ```css
 	.js-focus-visible :focus:not(.focus-visible) {
@@ -564,6 +575,7 @@ a, input, button {
 ```
 [참고, WICG의 focus visible](https://github.com/WICG/focus-visible)
 [출처](https://marshall-ku.com/web/tips/focus-visible%EB%A1%9C-%EC%A0%91%EA%B7%BC%EC%84%B1-%EB%86%92%EC%9D%B4%EA%B8%B0)
+
 
 
 [:focus-within]
@@ -582,6 +594,7 @@ a, input, button {
 	display: block;
 }
 ```
+
 - Dropdown 메뉴 안에 있는 요소에 outline을 아무리 추가해도 마우스를 올리지 않으면 메뉴가 표시조차 되지 않으니, 키보드론 절대로 선택할 수 없는 요소가 탄생해버린다. 심지어 display: none이 아니라 opacity: 0등으로 숨겨두었다면 키보드로 선택은 되지만 보이지 않는 요소가 탄생한다.
 
 ```css
@@ -595,14 +608,19 @@ a, input, button {
 #### [white-space 속성]
 - 요소가 공백문자를 처리하는 법을 지정
 - 속성값
-|                | 개행문자 | 스페이스, 탭 | 자동 줄바꿈 | 줄 끝의 공백 |
+<!-- |                | 개행문자 | 스페이스, 탭 | 자동 줄바꿈 | 줄 끝의 공백 |
 | -------------- | -------- | ------------ | ----------- | ------------ |
 | `normal`       | 병합     | 병합         | O           | 제거         |
 | `nowrap`       | 병합     | 병합         | X           | 제거         |
 | `pre`          | 유지     | 유지         | X           | 유지         |
 | `pre-wrap`     | 유지     | 유지         | O           | 넘침         |
 | `pre-line`     | 유지     | 병합         | O           | 제거         |
-| `break-spaces` | 유지     | 유지         | O           | 줄 바꿈      |
+| `break-spaces` | 유지     | 유지         | O           | 줄 바꿈      | -->
+|제목|내용|설명|
+|------|---|---|
+|테스트1|테스트2|테스트3|
+|테스트1|테스트2|테스트3|
+|테스트1|테스트2|테스트3|
 
 
 #### [icon 삽입 방법]
