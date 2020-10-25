@@ -1,7 +1,7 @@
 ## HTML
 <details open>
 <summary>1일차</summary>
-<div markdown="1>
+<div markdown="1">
 
 #### [HTML 정의]
 - HTML(HyperText Markup Language) : 웹 페이지를 위한 지배적인 마크업 언어
@@ -187,6 +187,7 @@ token의 값은 page, step, location, date, time, true, false(default)으로 정
 #### [CSS Box Model]
 - 문서의 레이아웃을 계산할 때, 브라우저의 렌더링 엔진은 표준 CSS 기본 박스 모델에 따라 각각의 요소를 사각형 박스로 표현
 - 하나의 박스는 네 부분(영역)으로 이루어진다. 각 영역을 콘텐츠 영역, 안쪽 여백(패딩) 영역, 테두리 영역, 그리고 바깥 여백(마진) 영역이라고 부른다.
+
 ![CSS Box Model](https://codinglead.github.io/images/box-model.png)
 
 #### [브라우저별 접두사]
