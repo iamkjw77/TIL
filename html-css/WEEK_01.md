@@ -608,7 +608,7 @@ a, input, button {
 #### [white-space 속성]
 - 요소가 공백문자를 처리하는 법을 지정
 - 속성값
-![속성값](./images/white_space_attribute.jpg)
+![속성값](./images/white_space_attribute.jpeg)
 
 #### [icon 삽입 방법]
 1. 가상요소를 이용한 삽입
