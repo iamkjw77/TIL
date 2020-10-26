@@ -666,3 +666,217 @@ a, input, button {
 </details>
 
 ---
+<details open>
+<summary>4일차</summary>
+<div markdown="4">
+
+#### [가상요소 선택자]
+- 선택자에 추가하는 키워드로, 선택한 요소의 일부분에만 스타일을 입힐 수 있다.
+- 요소박스 내에 가상요소는 한 번 밖에 사용할 수 없음(::before::before, ::after::after는 사용할 수 없음)
+- 기본값은 display: inline 
+- ::after, ::before, ::marker, ::backdrop, ::part(). ::placeholder, ::selection 등
+
+```css
+p::first-line {
+	color: blue;
+	text-transform: uppercase;
+	/* 문단 첫 줄의 글씨체가 바뀜 */
+}
+```
+
+- 규칙에 따라 단일 콜론(:)대신 이중 콜론(::)을 사용하여 가상요소와 가상클래스를 구별해야 한다. 하지만, 과거 W3C 명세에선 이런 구별법을 두지 않았으므로 대부분의 브라우저는 기존 가상 요소에 대해 두 구문 모두 지원한다.
+
+
+#### [자주쓰는 특수문자]
+- 특수문자가 포함된 경우 브라우저는 웹소스의 일부로 인식하여 결과가 다르게 나오는 경우가 있다.
+- `<>`안에 코드 형식을 쓰고, 그대로 보여주고 싶어도 태그로 인식하여 화면에 표시가 안 되는 경우가 있다.
+
+|특수문자|문자표현|
+|------|------|
+|<|&lt;|
+|>|&gt;|
+|&|&amp;|
+|*|&quot;|
+|#|&num;|
+|;|&semi;|
+|^|&Hat;|
+|'|&apos;|
+|space|&nbsp;|
+
+#### [margin collapse, 마진 병합, 마진 상쇄]
+- 여러 블록의 상하 바깥 여백(margin)은 경우에 따라 제일 큰 여백의 크기를 가진 단일 여백으로 결합(상쇄)된다. 
+- 마진 상쇄는 인접한 두 박스가 온전한 block-level 요소일 경우에만 적용
+- 마진 값이 0이더라도 상쇄 규칙은 적용
+- 좌우 마진은 겹치더라도 상쇄되지 않는다.
+
+#### [margin 상쇄가 일어나는 3가지 상황]
+1. 인접 형제 박스 간 상하 마진이 겹칠 때
+  - 겹쳐진 두 마진 값을 비교해, 더 큰 마진 값으로 랜더링한다. 만약 두 값이 동일하다면 둘 중 하나의 값으로(중복값)으로 랜더링된다.
+[!인접 형제간 상하마진](https://media.vlpt.us/post-images/raram2/97e16a40-121f-11ea-aaba-65695302c179/01-margin-collapsing-sibling-case.png)
+
+2. 빈 요소의 상하 마진이 겹칠 때 
+- “빈 요소”란 높이(height)가 0인 상태인 블록 요소를 말한다.
+- height/ min-hight / padding / border 등 상하로 늘어나는 속성값을 명시적으로 주지 않았거나
+- 내부에 inline 콘텐츠가 존재하지 않는 요소
+- 이 경우 위와 아래를 가르는 경계가 없으므로, 자신의 상하 마진 값을 비교해 큰 값으로 상쇄된다. 만약 두 값이 동일할 경우, 중복값으로 상쇄된다. 특히 빈 요소와 인접 박스들 간에 margin 겹침이 일어나는 구조에서는 다음과 같이 상쇄가 여러번 발생한다.
+(!빈 요소의 상하마진)[https://media.vlpt.us/post-images/raram2/ffac75c0-121f-11ea-aaba-65695302c179/02-margin-collapsing-emptybox-case.png]
+
+3. 부모 박스와 첫 번째(마지막) 자식 박스의 상단(하단) 마진이 겹칠 때
+- 브라우저는 부모박스와 첫 번째(마지막) 자식 박스 간의 경계를 그 사이에 있는 border/padding/inline 콘텐츠의 유무로 판단한다. 2번의 빈박스 마진 상쇄 현상과는 조금 다르게, 이미 명시적으로 height / min-height 값을 줬더라도 이번 경우에선 신경쓰지 않는다.
+[!부모 박스와 첫 번째 자식박스의 상단마진 박스](https://media.vlpt.us/post-images/raram2/3bc26dc0-1221-11ea-aaba-65695302c179/03-margin-collapsing-firstchild-case1.png)
+[!부모 박스와 마지막 자식 박스의 하단마진](https://media.vlpt.us/post-images/raram2/59ea9cf0-1221-11ea-aaba-65695302c179/06-margin-collapsing-lastchild-case.png)
+
+- `그래서` 부모 박스 상단(하단)에 padding 또는 border 값을 주어 벽을 만들어주는 것이 안전하다. 
+[!안전한 방법](https://media.vlpt.us/post-images/raram2/62855f30-1221-11ea-aaba-65695302c179/07-margin-collapsing-recomm-case.png)
+
+[참고](https://velog.io/@raram2/CSS-%EB%A7%88%EC%A7%84-%EC%83%81%EC%87%84Margin-collapsing-%EC%9B%90%EB%A6%AC-%EC%99%84%EB%B2%BD-%EC%9D%B4%ED%95%B4)
+
+#### [margin 상쇄 규칙 예외]
+- 박스가 `position: absolute` 된 상태
+- 박스가 `float: left/right` 된 상태(단, clear 되지 않은 상태)
+- 박스가 `display: flex` 일 때, 내부 flexbox item
+- 박스가 `display: grid` 일 때, 내부 grid item
+
+#### [animation 속성]
+- 다수의 스타일을 전환하는 애니메이션을 적용
+- transition보다 할 수 있는 것이 더 많다.
+- transition은 시작하기 위해 이벤트가 필요하지만, animation은 시작, 정지, 반복까지 제어 가능
+- 하나 또는 복수의 @keyframs로 이뤄짐
+- animation-name, animation-duration, animation-timing-function, animation-delay, animation-iteration-count, animation-direction, animation-fill-mode, animation-play-state의 단축속성
+
+```css
+/* @keyframes duration | timing-function | delay | iteration-count | direction | fill-mode | play-state | name */
+animation: 3s ease-in 1s 2 reverse both paused slidein;
+```
+
+#### [animation-fill-mode]
+- CSS 애니메이션이 실행 전과 후에 대상에 스타일 적용하는 방법
+- 속성값
+	- none : 애니메이션이 실행되지 않을 때, 대상에 스타일을 적용X(기본값)
+	- forwards : 대상은 실행된 애니메이션의 마지막 keyframe에 의해 설정된 값을 유지
+	- backwards : 애니메이션 대상에 적용되는 즉시 첫 번째 관련 keyframs에 정의된 값을 적용
+	- both : 애니메이션은 앞뒤 양쪽 모두의 규칙을 따르도록 애니메이션 속성이 양방향으로 확장
+
+#### [animation-play-mode]
+- 애니메이션의 진행상태를 설정
+- 속성값
+	- running(기본값) : 애니메이션을 움직이게 한다.
+	- paused : 애니메이션의 움직임을 정지시킨다.
+	- inherit : 애니메이션의 움직임을 상속받는다.
+
+#### [transition 속성]
+- 요소의 두 가지 상태 사이에 변화를 줄 수 있다.
+- transition-property, transition-duration, transition-timing-function과 transition-delay의 단축속성
+- transition-property(transition-name), transition-duration은 필수속성
+- 자동으로 발동되지 않음(가상클래스를 사용해 정의된 :hover or :active or 자바스크립트 같은 이벤트 트리거에 의해 동작)
+
+```css
+/* transition name | duration | timing function | delay */
+transition: margin-left 4s ease-in-out 1s;
+```
+
+#### [transform 속성]
+- 요소에 회전(rotate), 확대 축소(scale), 비틀기(skew), 이동효과(translate)를 부여할 수 있다.
+- transition과 animation을 조합하여 사용하면 편리하다.
+- transform: 함수1 함수2 함수3;
+
+#### [animation 이동]
+1. transform: translate(0, 0) → transform: translate(400px, 75px)
+	- translate를 사용할 경우 가로 스크롤이 생길 수 있음
+	- 해결법 : 요소에 width값을 준다.
+
+2. margin을 줘서 이동하는 것처럼 보이게 하는 경우
+	- margin 병합이 생길 수 있음, 이를 위한 조치가 필요
+
+3. padding을 줘서 이동하는 것처럼 보이게 하는 경우
+	- 요소에 배경이 없는 경우만 가능하다.
+
+4. position: relative를 이용한 경우
+	- 전체크기를 유지하면서 이동하기 때문에 가로스크롤이 생김	
+	- 해결법 : 요소에 width값을 준다.
+
+5. position: absolute를 쓰고, 부모에 position: relative를 주는 경우
+	- width값을 주지 않아도 스크롤이 안생기고 잘 움직임
+
+
+#### [CSS　성능]
+- 위의 animation 이동측면에서, 성능을 생각하면 translate()를 사용, translate는 이동의 개념이기 때문에 position보다 성능이 좋음
+- reflow : 생성된 DOM 노드의 레이아웃(너비, 높이 등) 변경 시 영향 받는 모든 노드(자식, 부모)의 수치를 다시 계산하여 렌더트리를 재생성하는 작업
+- repaint : reflow 과정이 끝난 후, 재생성된 랜더트리를 다시 그리는 작업으로 수치와 상관없는 background-color, visibility, outline 등의 스타일 변경 시에는 reflow 과정이 생략된 repaint 작업만 수행한다.
+- 레이아웃에 영향을 주는 스타일 height, margin등은 화면에 요소를 다시 그리기 때문에 reflow, repaint가 일어나 성능이 저하됨 
+
+[CSS 성능 개선방법](https://wit.nts-corp.com/2017/06/05/4571)
+[CSS 성능개선 사례](https://www.slideshare.net/wsconf/css-animation-wsconfseoul2017-vol2?qid=94336ada-5255-458e-8409-b37fe73ff911&v=&b=&from_search=3)
+
+#### [투명도, opacity]
+- opacity : 0 // 요소의 내용을 포함해 모든 곳에 영향을 주지만, 상속되지는 않는다.(상자 전체가 투명해짐)
+- color : transparent // 글자 색상만 투명해짐
+
+#### [form 태그]
+- 폼에 입력된 데이터를 한 번에 서버로 전송
+- <form>이 다른 <form>을 자식요소로 포함할 수 없음
+- display: block
+- 속성
+	- action(필수) : 폼을 전송할 서버 쪽 스크립트 파일을 지정
+	- name(필수) : 폼을 식별하기 위한 이름 지정(DB쪽 name과 동일)
+	- method : 폼을 서버에 전송할 HTTP 메소드를 정한다. (GET 또는 POST)
+	- target : 서버로 전송 후 응답받을 방식을 지정(기본값: _self)
+	- autocomplete : 사용자가 이전에 입력한 값으로 자동완성기능을 사용할 것인지 여부(기본값: on)
+	- novalidate : 서버로 전송 시 양식 데이터의 유효성을 검사하지 않도록 지정
+	  - ex) 이메일 형식이 맞지 않으면, 페이지가 넘어가지 않음(novalidate를 쓰면 검사X)
+
+#### [fieldset 태그]
+- `<fieldset>`태그는 `<form>`요소에서 연관된 요소들을 하나의 그룹으로 묶을 때 사용
+- `<fieldset>`요소는 하나의 그룹으로 묶은 요소들 주변으로 박스모양의 선을 그려줌
+- `<legend>`요소를 사용하면 `<fieldset>`요소의 캡션(caption)을 정의할 수 있음
+- `<form>`과 `<fieldset>` 요소를 독립적으로 만든 후, `<form>`의 id 속성과 `<fieldset>`의 form 속성을 연결해 form 요소를 명시할 수 있음 
+- XHTML에서는 form>fieldset>legend 구조가 필수이지만, HTML 4.01에서는 필수가 아님
+- HTML5에서는 form>fieldset>legend 구조를 써도 되고, 쓰지 않아도 됨(둘 다 가능하지만 구조를 사용하자)
+**`<form>`, `<fieldset>`은 디자인시 버그가 많으므로 주로, `<div>` 묶어서 디자인**
+
+
+#### [input type 및 속성]
+- 사용자에게 입력받을 데이터 양식(대화형 컨트롤)
+- input type의 종류
+	1. button
+	2. checked
+	3. color (IE지원 불가)
+	4. email
+	5. file
+	6. hidden
+	7. image
+	8. number
+	9. password
+	10. radio
+	11. range
+	12. reset
+	13. search
+	14. submit
+	15. tel
+	16. text
+	17. url
+
+#### [input 태그 required]
+- 폼 데이터(form data)가 서버로 제출되기 전 반드시 채워져 있어야 하는 입력 필드를 명시
+- input 내용이 공란이면, 서버에 가기 전 submit 되지 않음 
+- 불리언(boolean) 속성
+- 불리언 속성은 해당 속성을 명시하지 않으면 자동으로 false 값을 가지게 되며, 명시하면 자동으로 true 값을 가짐
+
+#### [label과 input의 연결]
+- label : 사용자 인터페이스 항목의 설명을 나타냄
+- input 요소는 1:1로 대응되는 label을 꼭 줘야 한다.
+- label과 input은 연결하면, 스크린리더기에서 input(폼 입력)에서 label을 읽어서 사용자가 입력해야 하는 텍스트가 무엇인지 더 쉽게 이해할 수 있다.
+- 연결하는 방법
+	1. label의 for 속성과 input의 id 속성을 연결(명시적)
+	2. input 요소 안에 title 속성을 주는 경우(명시적이긴 하지만 1번 방법을 쓰자)
+	3. label 안에 input을 중첩(이 경우 암묵적이므로, for 및 id 속성이 필요 없음)
+	
+#### [text-indent]
+- 블록(block) 요소에서 들여쓰기와 내어 쓰기
+- 값이 양수이면 들여쓰기, 값이 음수이면 내어쓰기(기본값은 0)
+- inline 요소는 사용 불가, inline은 padding 좌·우를 이용할 수 있음
+
+</div> 
+</details>
+
+---
