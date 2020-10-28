@@ -96,7 +96,6 @@ background: #ccc linear-gradient(#ccc, #eee);
 
 ---
 
-## HTML
 <details open>
 <summary>7일차</summary>
 <div markdown="7">
@@ -155,7 +154,6 @@ background: #ccc linear-gradient(#ccc, #eee);
 
 ---
 
-## HTML
 <details open>
 <summary>8일차</summary>
 <div markdown="8">
