@@ -223,6 +223,82 @@ border-image: url("/images/border.png") 27 23 / 50px 30px / 1rem round space;
 ---
 
 <details open>
+<summary>8일차</summary>
+<div markdown="8">
+
+#### [em]
+- Emphasis, 강조, 단순한 의미 강조
+- `<b>`, `<mark>` 는 특별한 의미가 있지 않았다면, `<em>`은 강조를 의미
+- 중첩이 가능(중첩할수록 강조 의미, 시각적으로는 같음) `<em><em></em></em>`
+- 기본적으로 이탤릭체로 표시됨(CSS로 제어 가능)
+
+#### [strong]
+- 의미의 중요성을 나타내기 위해 사용
+- 글자가 두껍게 표시됨
+
+#### [mark]
+- 사용자의 관심을 끌기 위해 하이라이팅 할 때 사용
+- 형광펜과 같은 효과
+
+#### #### [img alt속성]
+- Alternate(대체하다)의 줄임말, 이미지의 대안을 나타냄
+- 해당 이미지를 묘사해주는 내용 150자 이내로 들어가야 한다.
+- 비우더라도, alt 속성을 써주자 (alt 속성 자체를 쓰지 않으면 비표준)
+- 텍스트 이미지의 경우 해당 텍스트를 반드시 포함해야 한다.
+- 리스트 앞에 나오는 블릿 같은 아무 의미 없는 꾸미는 이미지의 경우 alt 속성을 비워두는 것이 좋다.
+- 이미지의 alt 값이 이미 나온 텍스트와 완전 동일한 텍스트를 넣기도 하는데, 이는 피해야할 방법이다. 이 경우 스크린 리더기와 같은 보조기기에서 말을 2번 반복하게 된다. 이런 경우 의미 없는 이미지처럼 alt를 비워두는 것이 낫다.
+
+#### [IR 기법, Image Replacement]
+- 웹 페이지에서 안내문을 디자인상의 이유로 일반 텍스트가 아닌 이미지로 게시해야 하는 등의 상황이 있을 수 있다. 또는 웹 페이지를 개발할 때 스크린리더 사용자에게 특정 이미지에 대한 추가 설명을 제공해야 할 때도 있다. 이렇게 이미지를 볼 수 없는 사용자에게 대체 텍스트를 제공하는 것을 `IR(Image Replacement)`이라고 한다.
+
+- 올바르지 않은 방법 : `visibility: hidden` 과 `display: none`은 요소를 보이지 않도록 하는 공통점이 있다. 이는 스크린리더기에서 읽지 않는 것을 원칙으로 한다.
+
+- 올바른 방법
+- aria-label의 사용 : 마크업 시, 텍스트를 지우고 aria-label을 준다. 웹 접근성도 준수하면서 가장 간단히 사용할 수 있다.
+- `<span>` 태그를 주고 그 안에 텍스트를 `a11y-hidden`으로 숨김처리
+
+#### [이미지 슬라이드 웹 접근성]
+- 자동 재생이 되는 슬라이더의 경우 사용자가 정지/재생 컨트롤에 우선 접근할 수 있도록 권장한다.
+- 정지/재생 컨트롤이 없다면, 키보드, 마우스 오버 시 멈추거나 자동갱신을 사용하면 안 됨
+- 자동 재생 기능이 없다면, 페이징(블릿) + 슬라이더 이미지로 구성
+
+#### [dimmed 레이어]
+- 딤드(dimmed, 흐릿한, 어둑한) 레이어 : 콘텐츠 위로 팝업이 떠있는 경우, 콘텐츠는 ‘어둑하게’ 무언가(딤드)에 덮여있다.
+[딤드 레이어](https://m.blog.naver.com/PostView.nhn?blogId=gounsori90&logNo=220515444685&proxyReferer=https:%2F%2Fwww.google.com%2F&view=img_1)
+
+#### [유틸리티]
+- utility, 유틸리티 : 컴퓨터의 여러 가지 처리과정을 보조하여 시스템을 보다 편리하게 사용할 수 있도록 하는 프로그램
+- 유틸리티 CSS : 관심사의 분리(Separation of concerns)는 달성될 수 없고, 역으로 HTML에 독립적인 CSS를 이용해서 재사용성을 높인다는 주장
+
+#### [CSS, 자식에게 상속되는 속성]
+- border-collapse
+- border-spacing
+- cursor
+(폰트 관련속성)
+- color
+- font-family
+- font-size
+- font-style
+- font-weight
+- letter-spacing
+- line-height
+- list-style-image
+- list-style-position
+- list-style-type
+- list-style
+- text-align
+- text-indent
+- visibility
+- white-space
+- word-space
+- windows
+
+</div> 
+</details>
+
+---
+
+<details open>
 <summary>좋은 습관들</summary>
 <div>
 
