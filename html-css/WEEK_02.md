@@ -349,7 +349,6 @@ background: url(“Spr_Naver_01.png”) -138px -66px;
 |`E[attr^=“val”]`|`attr` 속성의 값이 ‘val’로 시작하는 요소 E를 선택|
 |`E[attr$=“val”]`|`attr` 속성의 값이 ‘val’로 끝나는 요소를 선택|
 |`E[attr*=“val”]`|`attr` 속성의 값에 ‘val’이 포함되는 요소를 선택|
-|`E[attr|=“val”]`|`attr` 속성의 값이 정확하게 ‘val’이거나 ‘val-’으로 시작되는 요소 E를 선택|
 
 - ex) `.group3 [class$="heading"]`
 // group3 클래스에서 클래스가 heading으로 끝나는 요소
