@@ -215,6 +215,9 @@ border-image: url("/images/border.png") 27 23 / 50px 30px / 1rem round space;
 - 그리드 시스템을 언어 차원에서 지원하면서 더 이상 기존의 그리드 프레임 워크를 사용할 필요가 없어졌다. 행/열 격자 구조에 요소를 자유롭게 배치할 수 있을 뿐더러 반응형 웹 레이아웃 대응도 가능해 더욱 각광 받는 레이아웃 기술이다.
 - X축, Y축, 양쪽 방향 모두 설정 가능한 자유도가 높은 레이아웃 기법
 
+[그리드 게임](https://cssgridgarden.com/#ko
+)
+
 [출처](https://uid.gitbook.io/css-grid/web-layout-history)
 
 </div> 
@@ -223,8 +226,8 @@ border-image: url("/images/border.png") 27 23 / 50px 30px / 1rem round space;
 ---
 
 <details open>
-<summary>8일차</summary>
-<div markdown="8">
+<summary>9일차</summary>
+<div markdown="9">
 
 #### [em]
 - Emphasis, 강조, 단순한 의미 강조
@@ -241,6 +244,7 @@ border-image: url("/images/border.png") 27 23 / 50px 30px / 1rem round space;
 - 형광펜과 같은 효과
 
 #### #### [img alt속성]
+- `<img>`는 SEO에 검색될만한, 의미가 있는 이미지라면 적합, 만약 의미없는 이미지라면 background로 처리
 - Alternate(대체하다)의 줄임말, 이미지의 대안을 나타냄
 - 해당 이미지를 묘사해주는 내용 150자 이내로 들어가야 한다.
 - 비우더라도, alt 속성을 써주자 (alt 속성 자체를 쓰지 않으면 비표준)
@@ -254,8 +258,13 @@ border-image: url("/images/border.png") 27 23 / 50px 30px / 1rem round space;
 - 올바르지 않은 방법 : `visibility: hidden` 과 `display: none`은 요소를 보이지 않도록 하는 공통점이 있다. 이는 스크린리더기에서 읽지 않는 것을 원칙으로 한다.
 
 - 올바른 방법
-- aria-label의 사용 : 마크업 시, 텍스트를 지우고 aria-label을 준다. 웹 접근성도 준수하면서 가장 간단히 사용할 수 있다.
+- `aria-label`의 사용 : 마크업 시, 텍스트를 지우고 `aria-label`을 준다. 웹 접근성도 준수하면서 가장 간단히 사용할 수 있다.
+
 - `<span>` 태그를 주고 그 안에 텍스트를 `a11y-hidden`으로 숨김처리
+
+- `padding` 트릭: 이미지의 높이만큼 `padding-top`을 주고, `height: 0`속성을 이용해 높이를 없애고, `overflow:hidden`을 통해 아래의 글자부분을 감추면 글자는 안보이지만 보조기기에서 리딩이 가능하다.
+
+- `position: absolute`의 사용 : 이력서에서 (사진)이라고 써있는 곳에 사진을 붙이는 것처럼, 해당 요소에게 `position: relative` 또는 `position: absolute`를 줘서 기준을 잡아주고, 가상요소 선택자를 이용해 `background-image`를 이용해 이미지를 넣어주고, `position: absolute`를 사용하면 배경이미지가 먼저보인다. 가상요소는 텍스트가 없기때문에 크기가 없다. 따라서 `width: 100%; height: 100%;`를 마지막으로 넣어줘야 이미지가 보인다.
 
 #### [이미지 슬라이드 웹 접근성]
 - 자동 재생이 되는 슬라이더의 경우 사용자가 정지/재생 컨트롤에 우선 접근할 수 있도록 권장한다.
@@ -299,14 +308,186 @@ border-image: url("/images/border.png") 27 23 / 50px 30px / 1rem round space;
 ---
 
 <details open>
+<summary>10일차</summary>
+<div markdown="10">
+
+#### [CSS, Sprite 기법]
+- 발단 : 사용자가 웹 사이트에 접근하면, 웹 브라우저는 서버로부터 웹 서비스에 필요한 코드 문서와 이미지 리소스 등을 다운로드한다. 만약 대규모의 콘텐츠를 제공하는 웹 서비스라면, 이미지 리소스의 총용량도 그만큼 커질 수밖에 없다. 다운로드 시 발생하는 `네트워크 트래픽(traffic)`은 서비스 제공자에게는 서버 운영비용을 증가시키는 부담이 되고, 웹 사이트 로일 속도에 영향을 주어 사용자에게는 부정적인 경험이 될 수도 있다.
+
+- `스프라이트(Sprite)` : 그래서 대부분 웹 서비스에서는 레이아웃 구성에 필요한 다수의 이미지를 하나의 이미지에 포함시키고, 좌표와 크기 지정을 통해 추출하여 사용하는 방식을 선택하고 있다. 이런 목적으로 만들어진 이미지 리소스를 스프라이트(sprite)라고 한다. 
+
+- 예를 들어, 웹 서버에서 클라이언트의 GET 요청에 따른 응답으로 해당 문서를 전송할 때, 20개의 낱장의 이미지 파일이 웹 브라우저의 로컬 저장소에 복사되는 것보다는 1장의 이미지 파일이 복사되는 것이 훨씬 경제적이라고 할 수 있다. 즉, HTTP요청(Request) 횟수를 줄일 수 있다는 것이다.
+
+- 스타일 시트의 `background-image`, `background-position` 속성을 이용해서 스프라이트 이미지를 설정할 수 있다.
+
+```html
+<div id=“Container”>
+	<div class=“Sprite”></div>
+</div>
+```
+
+```css
+width: 52px;
+height: 52px;
+background: url(“Spr_Naver_01.png”) -138px -66px;
+```
+[출처](https://m.blog.naver.com/PostView.nhn?blogId=pxkey&logNo=221251177798&proxyReferer=https:%2F%2Fwww.google.com%2F)
+
+#### [`<ol>`]
+- 정렬된 목록을 나타낸다. 보통 숫자 목록으로 표현한다.
+- 자동으로 넘버링이 되지만, 넘버링 되는 숫자, 문자 등을 customize 할 수 없음
+- `customize` : 이용자가 사용방법과 기호에 맞추어서 하드웨어나 소프트웨어를 설정하거나 기능을 변경하는 것 
+
+#### [CSS, 속성 선택자]
+- 태그 안의 특정 속성들에 따라 스타일을 지정
+
+|패턴|의미|
+|-------------|--------------------------------------------------------------|
+|`E[attr]`|`attr` 속성이 포함된 요소 E를 선택|
+|`E[attr=“val”]`|`attr` 속성의 값이 정확하게 ‘val’과 일치하는 요소 E를 선택|
+|`E[attr~=“val”]`|`attr` 속성의 값에 ‘val’이 포함되는 요소를 선택|
+|`E[attr^=“val”]`|`attr` 속성의 값이 ‘val’로 시작하는 요소 E를 선택|
+|`E[attr$=“val”]`|`attr` 속성의 값이 ‘val’로 끝나는 요소를 선택|
+|`E[attr*=“val”]`|`attr` 속성의 값에 ‘val’이 포함되는 요소를 선택|
+|`E[attr|=“val”]`|`attr` 속성의 값이 정확하게 ‘val’이거나 ‘val-’으로 시작되는 요소 E를 선택|
+
+- ex) `.group3 [class$="heading"]`
+// group3 클래스에서 클래스가 heading으로 끝나는 요소
+
+#### [CSS, counter]
+- 문서에서의 위치에 따라 콘텐츠의 모양을 조정할 수 있다. 
+- 예를 들어, counter를 사용해 웹 페이지의 제목을 자동으로 번호를 매길 수 있다.
+- Counter는 요소가 몇 번이나 사용되었는지 추적하여 CSS 규칙에 따라 증가하며, 본질적으로 변수이다.
+
+- 사용하기
+	1. `counter-reset` 속성(초기값 0) : 초기화, 특정 값으로 초기화 할 수 있다.
+	2. `counter-increment` 속성 : `counter-increment`을 위의 변수값으로 명명
+	3. `counter(변수명)` : `content`에 `counter(변수명)`을 담아줌
+
+```css
+ul{
+	list-style: none;
+	counter-reset: list-number; /* list-number 변수 초기화, 초기화 안하면 0부터 시작 */
+/* counter-reset: list-number –1; 0부터 시작하는 숫자를 만들고 싶은 경우 초기화 */
+}
+
+ul li{
+	counter-increment: list-number;
+/* li 선택자의 counter-increment명을 list-number라고 명명*/
+}
+
+ul li::before{
+	content: counter(list-number);
+/* list-number를 count하여 가상선택자 before의 content로 담아줌*/
+}
+```
+#### [margin: 0 auto]
+
+```css
+margin: 0 auto;
+/* margin-right, margin-left 값이 모두 auto라면 너비를 양 여백에 동일하게 배정 */ 
+
+margin-left: auto
+/* 사용한 레이아웃에 따라 가로축 미사용 공간 너비를 바깥 여백에 할당 */
+/* 요소가 공백을 바깥여백에 할당하여, 왼쪽에 공백을 만들고, 오른쪽으로 배치됨 */
+```
+
+#### [blockquote]
+- 인용 `블록` 요소
+- 안쪽의 텍스트가 긴 인용문
+- 주로 들여쓰기를 한 것으로 그려짐
+- cite 속성을 이용하여 출처 URL을 적을 수 있다. 책을 인용한 경우 isbn(국제 표준도서 번호)을 작성
+- 출처 텍스트는 `<cite></cite>` 태그를 이용한다.
+- “인용문” 형태로 출력이 되는데 앞, 뒤의 “를 가상요소 선택자로 바꿀 수 있다.
+- 앞부분 따옴표를 바꾸고 싶은 경우 `요소::before`의 content 속성을 바꿔주고, 뒷부분 따옴표를 바꾸고 싶은 경우 `요소::after`의 content 속성을 바꾸면 된다.
+
+#### [q]
+- `인라인` 인용문 요소
+- 둘러싼 텍스트가 짧은 인용문
+- `<q>`는 줄바꿈이 없는 짧은 인용문의 경우 적합, 긴 인용문은 `<blockquote>` 사용
+- 대부분 브라우저에서는 앞, 뒤에 따옴표를 붙여 표현
+- cite 속성을 이용하여 출처 URL을 적을 수 있다. 책을 인용한 경우 isbn(국제 표준도서 번호)을 작성
+- 앞, 뒤의 따옴표 변경은 `<blockquote>`의 변경방법과 quotes 속성으로 바꿀 수 있다.
+
+```css
+q{
+  quotes: "[""]";
+/* [인용문] 형태로 변경됨 */
+}
+```
+
+#### [자동으로 생성되는 출처]
+- 해당 영역에 `<footer></footer>`를 사용해 출처를 작성한 후, a11y-hidden 클래스로 감춰준다.
+
+```html
+<article class="slogan">
+    <h2 class="slogan-heading" title="웹카페에서 웹표준을">슬로건</h2>
+    <p class="slogan-brief">
+      <q cite="http://w3.org/WAI">
+        The power of the Web is in its universality, Access by everyone regardless of disability is an essential aspect.
+      </q>
+      Tim Berners - Lee , W3C Director and inventor of the World Wide Web
+    </q>
+    </p>
+    <footer class="a11y-hidden">
+      출처 : W3C, http://w3.org/WAI/
+    </footer>
+  </article>
+```
+
+#### [address]
+- 가까운 HTML 요소의 사람, 단체, 조직 등에 대한 연락처 정보를 나타낸다.
+- `<footer></footer>` 에서만 사용가능한 태그
+
+```html
+<address>
+  <a href="mailto:jim@rock.com">jim@rock.com</a><br>
+  <a href="tel:+13115552368">(311) 555-2368</a>
+</address>
+``` 
+
+#### [small]
+- 덧붙이는 글이나, 저작권과 법률 표기 등의 작은 텍스트를 나타냄
+- display: inline
+
+```html
+<small class="copyright">
+        Copyright since &copy; 2010 by Web Cafe CORPORATION ALL RIGHTS RESERVED.
+</small>
+```
+
+#### [text-transform]
+- 대문자 또는 소문자로 바꾸는 속성
+- 속성값
+	- none : 입력된 그대로 출력(기본값)
+	- capitalize : 단어의 첫 번째 글자를 대문자로 바꾼다.
+	- uppercase : 모든 글자를 대문자로 바꾼다.
+	- lowercase : 모든 글자를 소문자로 바꿉니다.
+	- initial : 기본값으로 설정
+	- inherit : 부모 요소의 속성값을 상속
+
+</div> 
+</details>
+
+---
+<details open>
 <summary>좋은 습관들</summary>
 <div>
 
 `HTML`
-
+1. 논리적 순서 → 시맨틱 마크업 → 네이밍 → 구조설계 후 mark up 하자
+2. 안써도 되는 `<div>`는 사용하지 말자
+3. 원하는 결과와 다른결과가 나오면 `computed 스타일 탭`을 활용하자
+4. 마크업 시, tab을 눌러서 tab UI도 고려하자
 
 `CSS`
 1. 각 요소마다 배경색을 줘서 구조를 파악하자
+2. 개발, 배포 버전을 따로 만들자. (배포 버전은 주석과 띄어쓰기를 뺀 min버전)
+[CSS Minifier](https://cssminifier.com/)
+3. 중복되는 코드는 가능한 합쳐서 한 번에 쓰자(성능을 생각해서 최적화)
+4. 재정의 안해도 될 속성을 재정의하면 성능 관점에서 좋지않다. 필요한 것만 재정의 하자(`margin: 0` → `margin-top: 0; margin: bottom: 0`)
+4. 네트워크 패널을 활용해 성능을 확인하는 습관을 가지자
+5. 의미없는 `<div>`는 `role 속성`을 사용하자
 
 </div> 
 </details>
@@ -318,7 +499,8 @@ border-image: url("/images/border.png") 27 23 / 50px 30px / 1rem round space;
 <div>
 
 <pre>
-
+고정형 웹페이지 만드는 수업이 끝났다. 수업할 때는 쉽게 만든 것도 혼자하면 좀처럼 잘 안된다.
+다양한 방법으로 만들어보는 연습이 정말 많이 필요한 것 같다. 특히 float는 다시 한 번 정리해야겠다.  
 </pre>
 
 </div> 
