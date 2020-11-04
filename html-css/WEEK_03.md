@@ -402,6 +402,32 @@ ex) 16:9인 경우, 9/16 = 0.5625(56.25%)
 ---
 
 <details open>
+<summary>13일차</summary>
+<div markdown="12">
+
+#### [:checked]
+- :checked 가상 클래스는 요소가 `checked(선택)` 상태일 때, 적용하는 선택자이다.
+```css
+.save-email input:checked + span{ 
+/* checked된 input의 형제요소 span */
+}
+```
+
+#### [user-select]
+- 사용자가 텍스트를 선택할 수 있는지 지정한다.
+- 속성값
+	- `none` : 텍스트 선택 안됨
+	- `auto` : default 값으로 브라우저 허용 시 텍스트 선택 가능
+	- `all` : 더블클릭이 아닌 클릭만으로도 선택이 가능
+	- `text` : 텍스트 선택이 가능
+
+
+</div> 
+</details>
+
+---
+
+<details open>
 <summary>좋은 습관들</summary>
 <div>
 
