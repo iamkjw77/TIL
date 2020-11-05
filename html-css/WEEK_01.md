@@ -88,7 +88,7 @@ token의 값은 page, step, location, date, time, true, false(default)으로 정
 - `aria-describedby` : 자세한 설명 참조, id값을 이용하여 상세한 내용을 참조(연결)하는 방식으로 설명한다. 링크(a), 폼 컨트롤(input, textarea, select, button), 알럿(role="alert"), 알럿 대화상자(role="alertdialog")요소에 사용하면 적절하다.
 
 - `aria-errormessage` : 주로 input 요소에 선언하여 오류 메시지를 제공하는 요소를 값으로 참조
-- `aria-modal : 모달인지 여부를 보조기기에 전달
+- `aria-modal` : 모달인지 여부를 보조기기에 전달
 
 - `aria-required` : 폼을 완료하기 위한 필수요소임을 알리기 위해 사용, 현재는 required를 사용할 수 있으므로 required와 aria-required 모두를 사용하는 것은 권장하지 않음
 
