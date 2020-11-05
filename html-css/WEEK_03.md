@@ -403,7 +403,7 @@ ex) 16:9인 경우, 9/16 = 0.5625(56.25%)
 
 <details open>
 <summary>13일차</summary>
-<div markdown="12">
+<div markdown="13">
 
 #### [:checked]
 - :checked 가상 클래스는 요소가 `checked(선택)` 상태일 때, 적용하는 선택자이다.
@@ -420,6 +420,107 @@ ex) 16:9인 경우, 9/16 = 0.5625(56.25%)
 	- `auto` : default 값으로 브라우저 허용 시 텍스트 선택 가능
 	- `all` : 더블클릭이 아닌 클릭만으로도 선택이 가능
 	- `text` : 텍스트 선택이 가능
+
+
+</div> 
+</details>
+
+---
+
+<details open>
+<summary>14일차</summary>
+<div markdown="14">
+
+#### [CSS landmark roles]
+: landmark 기본유형에서 상속되며 각 역할 속성에서 모두 가져옴
+: landmark로 `<header>`, `<main>`, `<footer>` 태그 대신 사용할 경우, 해당영역으로 바로 이동할 수 있다.(시맨틱 태그도 바로 이동 가능)
+- `banner` : 페이지 별 콘텐츠가 아닌 사이트 중심 콘텐츠를 주로 포함하는 영역
+- `contentinfo` : 상위문서에 대한 정보가 포함된 인식 가능한 큰 영역
+- `form` : 양식을 만들 결합, 항목 및 개체의 컬렉션을 포함 한 지역
+- `main` : 문서의 주요 내용
+- `navigation` : 문서 또는 관련 문서를 탐색하기 위한 탐색 요소 모음
+- `region` : 의도한 목적이 사용자가 쉽게 섹션을 이동하고 요약된 내용을 통해 요소를 빠르게 탐색할 수 있게 하는 역할
+- `search` : 전체, 검색 기능을 만들 결합, 항목 및 개체의 컬렉션을 포함한 지역
+
+#### [html hidden]
+- 전역 특성 중 하나로, 해당요소가 아직 또는 더 이상 관련이 없음을 나타내는 불리언 특성이다. 
+- 브라우저는 `hidden` 속성을 설정한 요소를 렌더링하지 않는다.
+- `display: none` 과 같은 의미
+
+#### [role=“dialog”]
+- `dialog`의 역할은 HTML 기반의 애플리케이션의 다이얼로그 또는 콘텐츠를 분리하는 창(모달창) 또는 웹 애플리케이션의 UI 혹은 페이지를 마크업하는데 사용된다. 다이얼로그는 일반적으로 오버레이를 사용하여 페이지 위에 표시된다. 다이얼로그는 비모달(열린 이후에도 다이얼로그 바깥의 콘텐츠화 상호작용하는 경우) 또는 모달(오로지 다이얼로그 콘텐츠와 상호작용 하는 경우) 형태일 수 있다.
+- 본문에서 버튼을 누르면 팝업이 뜨는 경우, 보조기기에서 팝업 내용이 아닌 본문내용을 읽을 수 있다. 이런 경우 팝업 레이어에 `role=“dialog”`를 사용하면 본문을 읽다가 팝업을 누르는 순간 팝업내용을 읽어준다.
+
+#### [다단, multi-columns]
+- 일반 블록 레이아웃을 확장하여 여러 텍스트 다단으로 정리하며 가독성을 확보한다.
+- `columns` : 다단을 정의(단축속성)
+- 사용법 > `columns: 100px 2;`
+- 속성값
+	- `auto` : 브라우저가 단의 너비와 개수를 설정(기본값: auto)
+	- `column-width` : 단의 최적 너비를 설정(기본값: auto)
+	- `column-count` : 단의 개수를 설정(기본값: auto)
+
+- `column-gap` : 단과 단 사이의 간격 설정
+- 사용법: `column-gap: 간격;`
+- 속성값
+	- `normal` : 브라우저가 단과 단 사이의 간격을 설정(1em, 기본값: normal)
+	- 단위 : px, em, cm 등 단위로 지정
+
+- `column-rule` : 단과 단 사이의 (구분) 선을 지정
+- 사용법: `column-rule: 두께 종류 색상;`
+- 속성값
+	- `column-width` : 선의 두께를 지정(기본값: medium)
+	- `column-style` : 선의 종류를 지정(기본값: none)
+	- `column-color` : 선의 색상을 지정(기본값: 요소의 글자색과 동일)
+
+#### [table]
+- `<table>` : 행과 열로 이루어진 표를 나타낸다.
+- `<caption>` : 표의 설명 또는 제목을 나타낸다.
+- `<th>` : table head, 해당 테이블의 헤더 셀(제목 셀)을 나타낸다.
+- `<tr>` : table row, 테이블에서 가로줄을 만드는 역할
+- `<td>` : table data, 테이블에서 셀을 만드는 역할
+- `colspan` 속성 : 가로를 병합, 열(col)들을 병합하는 속성
+- `rowspan` 속성 : 세로를 병합, 행(row)들을 병합하는 속성
+
+```html
+<table>
+    <caption>He-Man and Skeletor facts</caption>
+    <tr>
+        <td> </td>
+        <th scope="col" class="heman">He-Man</th>
+        <th scope="col" class="skeletor">Skeletor</th>
+    </tr>
+    <tr>
+        <th scope="row">Role</th>
+        <td>Hero</td>
+        <td>Villain</td>
+    </tr>
+    <tr>
+        <th scope="row">Weapon</th>
+        <td>Power Sword</td>
+        <td>Havoc Staff</td>
+    </tr>
+    <tr>
+        <th scope="row">Dark secret</th>
+        <td>Expert florist</td>
+        <td>Cries at romcoms</td>
+    </tr>
+</table>
+```
+
+#### [table의 웹 접근성, scope와 headers]
+- `scope` 속성 : 스크린 리더기로 테이블에 대한 정보를 얻어야하기 때문에 `scope=“col”`과 `scope=“row”`를 작성함으로써 테이블의 데이터를 인식하고 읽는 순서를 결정하게 된다.
+- `headers` 속성과 `id` : `headers`는 읽어 들이는 것, `id`는 해당 요소에 이름을 부여한 것이다. 
+[자세한 사용법과 참고](https://rgy0409.tistory.com/2898)
+
+</div> 
+</details>
+
+---
+
+<details open>
+<summary>15일차</summary>
+<div markdown="15">
 
 
 </div> 

@@ -59,36 +59,38 @@
 - 이웃한 콘텐츠는 구별될 수 있어야한다. 테두리 또는 `margin`을 이용해 구분제공을 해야한다.
 
 #### [aria 속성]
-- aria-current : 현재 맥락과 일치하는 항목을 의미
+- `aria-current` : 현재 맥락과 일치하는 항목을 의미
 token의 값은 page, step, location, date, time, true, false(default)으로 정해져 있고 이 중 하나만 사용할 수 있습니다.
 
-- aria-selected : 단일 속성 또는 다중 선택이 가능한 요소에 한하여 선택상태를 명시하는 용도로 사용, 키보드 초점을 받을 수 있는 요소에 적용해야한다.
+- `aria-selected` : 단일 속성 또는 다중 선택이 가능한 요소에 한하여 선택상태를 명시하는 용도로 사용, 키보드 초점을 받을 수 있는 요소에 적용해야한다.
 
-- aria-haspopup : 연결되어 있는 팝업(메뉴, 대화상자) 정보를 제공한다. 팝업은 다른 내용 위에 표시하는 블록을 의미한다.
+- `aria-haspopup` : 연결되어 있는 팝업(메뉴, 대화상자) 정보를 제공한다. 팝업은 다른 내용 위에 표시하는 블록을 의미한다.
 
-- aria-expanded : 제어 대상의 확장 또는 축소상태를 나타낸다. 어코디언, 메뉴, 콤보박스, 트리와 같이 하위 그룹(또는 독립적인) 내용을 토글(열기, 닫기)하는 경우에 사용하면 적절하다. 독립적인 내용을 제어할 때 aria-controls 속성을 이용하여 제어 대상을 명시해야함.
+- `aria-expanded` : 제어 대상의 확장 또는 축소상태를 나타낸다. 어코디언, 메뉴, 콤보박스, 트리와 같이 하위 그룹(또는 독립적인) 내용을 토글(열기, 닫기)하는 경우에 사용하면 적절하다. 독립적인 내용을 제어할 때 aria-controls 속성을 이용하여 제어 대상을 명시해야함.
 
-- aria-pressed : aria-presses 속성은 토글 버튼(button, role=“button”)이 눌린 상태를 표시한다. 흔하게 사용하는 속성은 아니다. 이속성을 사용하기 전에 aria-selected 속성을 먼저 검토하는 것이 좋다.
+- `aria-pressed` : aria-presses 속성은 토글 버튼(button, role=“button”)이 눌린 상태를 표시한다. 흔하게 사용하는 속성은 아니다. 이속성을 사용하기 전에 aria-selected 속성을 먼저 검토하는 것이 좋다.
 
-- aria-hidden : 접근성 API(보조기기 접근 가능성) 차단 상태를 결정한다. 화면에 표시하지만 잠시 사용을 제한하는 콘텐츠에 사용
-
-
-- aria-invalid : 주로 input 요소에 선언하여 사용자가 입력한 값이 요구하는 형식과 일치하는지 여부를 나타낸다.
+- `aria-hidden` : 접근성 API(보조기기 접근 가능성) 차단 상태를 결정한다. 화면에 표시하지만 잠시 사용을 제한하는 콘텐츠에 사용
 
 
-- aria-controls : 현재 요소가 제어하는 대상을 명시하는 속성
-
-- aria-live : 실시간으로 내용을 갱신하는 영역을 의미
+- `aria-invalid` : 주로 input 요소에 선언하여 사용자가 입력한 값이 요구하는 형식과 일치하는지 여부를 나타낸다.
 
 
-- aria-label : 간결한 설명을 직접 제공, 현재요소를 설명할 다른 참조(연결)요소가 없는 경우에만 사용
+- `aria-controls` : 현재 요소가 제어하는 대상을 명시하는 속성
+
+- `aria-live` : 실시간으로 내용을 갱신하는 영역을 의미
+
+
+- `aria-label` : 간결한 설명을 직접 제공, 현재요소를 설명할 다른 참조(연결)요소가 없는 경우에만 사용
  
-- aria-labelledby : 현재 요소에 설명을 제공하는 속성이다. id값을 이용하여 간결한 내용을 참조(연결)하는 방식으로 설명한다. 보통 `hn`, `a`, `button` 요소를 참조하면 적절하다. `aria-label` 속성과 함께 선언하는 경우 `aria-labelledby` 속성이 우선순위가 높기 때문에 보조기기는 aria-labelledby 속성을 설명한다.
+- `aria-labelledby` : 현재 요소에 설명을 제공하는 속성이다. id값을 이용하여 간결한 내용을 참조(연결)하는 방식으로 설명한다. 보통 `hn`, `a`, `button` 요소를 참조하면 적절하다. `aria-label` 속성과 함께 선언하는 경우 `aria-labelledby` 속성이 우선순위가 높기 때문에 보조기기는 aria-labelledby 속성을 설명한다.
  
-- aria-describedby : 자세한 설명 참조, id값을 이용하여 상세한 내용을 참조(연결)하는 방식으로 설명한다. 링크(a), 폼 컨트롤(input, textarea, select, button), 알럿(role="alert"), 알럿 대화상자(role="alertdialog")요소에 사용하면 적절하다.
+- `aria-describedby` : 자세한 설명 참조, id값을 이용하여 상세한 내용을 참조(연결)하는 방식으로 설명한다. 링크(a), 폼 컨트롤(input, textarea, select, button), 알럿(role="alert"), 알럿 대화상자(role="alertdialog")요소에 사용하면 적절하다.
 
-- aria-errormessage : 주로 input 요소에 선언하여 오류 메시지를 제공하는 요소를 값으로 참조
-- aria-modal : 모달인지 여부를 보조기기에 전달
+- `aria-errormessage` : 주로 input 요소에 선언하여 오류 메시지를 제공하는 요소를 값으로 참조
+- `aria-modal : 모달인지 여부를 보조기기에 전달
+
+- `aria-required` : 폼을 완료하기 위한 필수요소임을 알리기 위해 사용, 현재는 required를 사용할 수 있으므로 required와 aria-required 모두를 사용하는 것은 권장하지 않음
 
 #### [HTML, CSS 설계]
 1. 구조 분석 단계
@@ -122,7 +124,7 @@ token의 값은 page, step, location, date, time, true, false(default)으로 정
         - 접두어를 사용하는 표기법
 
 #### [CSS 방법론]
-1. BEM(Block Element Modifier)
+1. `BEM(Block Element Modifier)`
     - 개발, 디버깅, 유지보수를 위하여 가능한 한 명확하게 네이밍하는 것이 목표
     - 소문자, 숫자만을 조합
     - 조합은 하이픈(-)으로 연결하여 작명
