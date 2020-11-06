@@ -60,7 +60,8 @@
 
 #### [aria 속성]
 - `aria-current` : 현재 맥락과 일치하는 항목을 의미
-token의 값은 page, step, location, date, time, true, false(default)으로 정해져 있고 이 중 하나만 사용할 수 있습니다.
+token의 값은 `page`, `step`, `location`, `date`, `time`, `true`, `false(default)`으로 정해져 있고 이 중 하나만 사용할 수 있다.
+ex) pagination에서 현재 머물고 있는 곳에 `aria-current`값을 `page`
 
 - `aria-selected` : 단일 속성 또는 다중 선택이 가능한 요소에 한하여 선택상태를 명시하는 용도로 사용, 키보드 초점을 받을 수 있는 요소에 적용해야한다.
 

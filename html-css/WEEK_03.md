@@ -522,6 +522,18 @@ ex) 16:9인 경우, 9/16 = 0.5625(56.25%)
 <summary>15일차</summary>
 <div markdown="15">
 
+#### [details, summary, opens속성]
+- `<details>` : “열림”상태 일 때만 내부 정보를 보여주는 정보 공개 위젯을 생성한다. 요약이나 레이블은 `<summary>` 요소를 통해 제공할 수 있다. 
+- 정보 공개 위젯은 보통 레이블 옆에 작은 삼각형이 나타나면서 열림/닫힘 상태를 나타낸다. `<details>` 요소의 첫 번째 자식이 `<summary>` 요소라면 `<summary>`의 콘텐츠를 위젯의 레이블로 사용한다.
+- `open` 속성 : 상세정보, 즉 `<details>` 요소의 콘텐츠가 현재 보이는 상태인지 나타낸다. 기본값은 `false`로 정보가 보이지 않는다는 뜻이다.
+- IE지원 불가, 지원이 안 되는 브라우저를 위해 `polyfill`을 사용할 수 있다.
+
+```html
+<details>
+    <summary>Details</summary>
+    Something small enough to escape casual notice.
+</details>
+```
 
 </div> 
 </details>
@@ -531,6 +543,8 @@ ex) 16:9인 경우, 9/16 = 0.5625(56.25%)
 <details open>
 <summary>좋은 습관들</summary>
 <div>
+
+1. 오타먼저 찾고, 없다면 문법검사하자
 
 </div> 
 </details>
@@ -542,7 +556,7 @@ ex) 16:9인 경우, 9/16 = 0.5625(56.25%)
 <div>
 
 <pre>
-
+HTML, CSS 과정이 모두 끝났다. 너무 빨리 지나가버렸지만, 정말 깊이 있게 공부할 수 있는 시간이었다. 예전에는 못느꼈던 재미를 느껴서 너무 좋다. HTML 문법 외에도, 웹 접근성에 대해 정말 많이 배우고 다른 시각이 생긴 것 같다. 이 문서는 계속 계속 많이 많이 봐야겠다.    
 </pre>
 
 </div> 
