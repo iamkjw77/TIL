@@ -13,7 +13,7 @@
 
 <br />
 
-![compiler](..\images\programming.PNG)
+![compiler](../images/programming.PNG)
 
 
 #### 자바스크립트의 특징
@@ -129,7 +129,7 @@
 [출처](https://imasoftwareengineer.tistory.com/43)
 
 #### 자바스크립트의 작동원리
-![작동원리](..\images\v8_js.PNG)
+![작동원리](../images/v8_js.PNG)
 
 <br />
 
