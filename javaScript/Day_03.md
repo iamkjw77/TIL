@@ -243,15 +243,18 @@ if(true){
 - 레이블 문은 권장하지 않음
 <br />
 
-![label](../images/label.png)
-![break](../images/break.png)
+![label](../images/label.PNG)
+
+<br />
+
+![break](../images/break.PNG)
 
 #### continue 문
 - 반복문의 코드 블록 실행을 현 지점에서 중단하고 반복문의 증감식으로 실행 흐름을 이동시킨다.
 - break 문처럼 반복문을 탈출하지는 않는다.
 <br />
 
-![continue](../images/continue.png)
+![continue](../images/continue.PNG)
 
 #### 타입 변환이란
 - 개발자가 의도적으로 값의 타입을 변환하는 것을 `명시적 타입 변환(explicit coercion)` 또는 타입 캐스팅(type casting)이라 한다.
@@ -353,7 +356,7 @@ Boolean(‘x’); // true
 - 논리곱 연산자는 논리연산의 결과를 결정하는 두 번째 피연산자를 반환한다.
 <br />
 
-![and](../images/and.png)
+![and](../images/and.PNG)
 
 ```javascript
 'Cat' || 'Dog' // ‘Cat’
@@ -362,19 +365,19 @@ Boolean(‘x’); // true
 - 첫 번째 피연산자는 Truthy 값이므로 true로 평가된다. 이 시점에서 두 번째 피연산자까지 평가해보지 않아도 위 표현식을 평가할 수 있다.
 <br />
 
-![or](../images/or.png)
+![or](../images/or.PNG)
 
 #### 옵셔널 체이닝 연산자(optional chaining)
 - ES11에서 도입된 옵셔널 체이닝 연산자 `.?` 는 좌항의 피연산자가 `null` 또는 `undefined`인 경우 undefined를 반환하고, 그렇지 않으면 우항의 프로퍼티를 참고한다.
 <br />
 
-![option](../images/option.png)
+![option](../images/option.PNG)
 
 #### null 병합 연산자(nullish coalescing)
 - ES11에서 도입된 null 병합 연산자 `??`는 좌항의 피연산자가 `null` 또는 `undefined`인 경우 우항의 피연산자를 반환하고, 그렇지 않으면 좌항의 피연산자를 반환한다.
 <br />
 
-![null](../images/null.png)
+![null](../images/null.PNG)
 
 </div> 
 </details>
