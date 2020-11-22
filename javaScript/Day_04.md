@@ -12,14 +12,14 @@
 - 객체는 0개 이상의 프로퍼티로 구성된 집합이며, 프로퍼티는 `키(key)와 값(value)`으로 구성된다.
 <br />
 
-![property](../images/property.png)
+![property](../images/property.PNG)
 
 - 자바스크립트에서 사용할 수 있는 모든 값은 프로퍼티 값이 될 수 있다.
 - 자바스크립트의 함수는 일급객체이므로 값으로 취급할 수 있다.
 - 프로퍼티의 값이 함수일 경우, 일반 함수와 구분하기 위해 `메서드(method)`라 부른다.
 <br />
 
-![method](../images/method.png)
+![method](../images/method.PNG)
 
 - 객체는 프로퍼티와 메서드로 구성된 집합체이다.
 - 객체는 상태와 동작을 모두 포함할 수 있으므로, 상태와 동작을 하나의 단위로 구조화할 수 있어 유용하다.
@@ -56,16 +56,16 @@
 - 반대로, 식별자 네이밍 규칙을 따르지 않는 이름에는 반드시 따옴표를 사용해야 한다.
 <br />
 
-![property_key](../images/property_key.png)
+![property_key](../images/property_key.PNG)
 
 - 자바스크립트 엔진은 따옴표를 생략한 last-name은 –연산자가 있는 표현식으로 해석한다. (따옴표를 안쓰면 SyntaxError)
 <br />
 
-![create_key](../images/create_key.png)
+![create_key](../images/create_key.PNG)
 - 문자열 또는 문자열로 평가할 수 있는 표현식을 사용해 프로퍼티 키를 동적으로 생성할 수도 있다. 이 경우 프로퍼티 키로 사용할 표현식을 대괄호([...])로 묶어야 한다.
 <br />
 
-![type_key](../images/type_key.png)
+![type_key](../images/type_key.PNG)
 - 프로퍼티 키에 문자열이나 심벌 값 이외의 값을 사용하면 `암묵적 타입 변환을 통해 문자열`이 된다. 
 - 예를 들어, 프로퍼티 키로 숫자 리터럴을 사용하면 따옴표는 붙지 않지만 내부적으로 문자열로 변환된다.
 
@@ -100,7 +100,7 @@ console.log(person.age); //undefined
 - 단, 프로퍼티 키가 숫자로 이뤄진 문자열인 경우 따옴표를 생략할 수 있다.
 <br />
 
-![notation](../images/notation.png)
+![notation](../images/notation.PNG)
 
 - `person.last-name`의 실행 결과는 Node.js 환경에서 “ReferenceError: name is not defined”이고 브라우저 환경에서는 `NaN`이다.
 - `person.last-name`을 실행할 때 자바스크립트 엔진은 먼저 person.last를 평가한다. person 객체에는 last인 프로퍼티가 없으므로 person.last는 `undefined`로 평가된다. 따라서 `person.last-name`은 `undefined – name`과 같다. 다음으로 자바스크립튼 엔진은 name이라는 식별자를 찾는다. 이때 name은 프로퍼티 키가 아니라 식별자로 해석된다.
@@ -292,12 +292,12 @@ console.log(score === copy); // false
 - 이때 score 변수와 copy 변수는 숫자 값 80을 갖는다는 점에서 동일하다. 하지만 score 변수와 copy 변수의 값 80은 다른 메모리 공간에 저장된 별개의 값이다. 따라서 score 변수의 값을 변경해도 copy 변수의 값에는 어떠한 영향도 주지 않는다.
 <br />
 
-![pass_by_value](../images/pass_by_value.png)
+![pass_by_value](../images/pass_by_value.PNG)
 
 - 파이썬에서 변수
 <br />
 
-![python](../images/python.png)
+![python](../images/python.PNG)
 
 - 파이썬에서 변수는 원시값을 갖는 변수를 할당하는 시점에는 두 변수가 같은 원시값을 참조하다가 어느 한쪽의 변수에 재할당이 이뤄졌을 때 비로소 새로운 메모리 공간에 재할당된 값을 저장하도록 동작할 수 있다.
 
@@ -328,7 +328,7 @@ var copy = score;
 - 대부분의 자바스크립트 엔진은 해시 테이블과 유사하지만 높은 성능을 위해 일반적인 해시 테이블보다 나은 방법으로 객체를 구현한다.
 <br />
 
-![hash_table](../images/hash_table.png)
+![hash_table](../images/hash_table.PNG)
 - JAVA, C++ 같은 클래스 기반 객체지향 프로그래밍 언어 : 사전에 정의된 클래스를 기반으로 객체(인스턴스)를 생성한다. 객체를 생성하기 이전에 이미 프로퍼티와 메서드가 정해져 있으며 그대로 객체를 생성한다. 객체가 생성된 이후에는 프로퍼티를 삭제하거나 추가할 수 없다.
 - `자바스크립트` : `클래스 없이 객체를 생성할 수 있으며` 객체가 생성된 이후라도 동적으로 프로퍼티와 메서드를 추가할 수 있다. 이는 사용하기 매우 편리하지만, 성능 면에서는 이론적으로 클래스 기반 객체지향 프로그래밍 언어의 객체보다 생성과 프로퍼티 접근에 `비용이 더 많이 드는 비효율적인 방식`이다.
 - 따라서 V8 자바스크립트 엔진은 프로퍼티에 접근하기 위해 동적 탐색(dynamic lookup) 대신 `히든 클래스(hidden class)`라는 방식을 사용해 C++ 객체의 프로퍼티에 접근하는 정도의 성능을 보장한다.
@@ -389,7 +389,7 @@ console.log(person); // {name: “Kim”, address: “Seoul”}
 ```
 <br />
 
-![object](../images/object.png)
+![object](../images/object.PNG)
 - 원시값은 변경 불가능한 값이므로 원시값을 갖는 변수의 값을 변경하려면 `재할당`을 통해 메모리의 원시값을 새롭게 생성해야 한다.
 - 객체는 `변경 가능한 값`이므로 저장된 객체를 `직접 수정`할 수 있다.
 - 이때 객체를 할당한 변수에 재할당을 하지 않았으므로 객체를 할당한 변수의 참조값은 변경되지 않는다.
@@ -404,7 +404,7 @@ console.log(person); // {name: “Kim”, address: “Seoul”}
 - 객체를 프로퍼티 값으로 갖는 객체의 깊은 복사 : 객체에 중첩된 객체까지 모두 복사하는 것을 의미
 <br />
 
-![copy](../images/copy.png)
+![copy](../images/copy.PNG)
 - 얕은 복사와 깊은 복사로 생성된 객체는 `원본과는 다른 객체`이다.
 - 즉, 원본과 복사본은 `참조값이 다른 별개의 객체`이다.
 - 얕은 복사는 객체에 중첩된 객체의 경우 참조값을 복사
@@ -436,7 +436,7 @@ var copy = person;
 ```
 <br />
 
-![pass_by_reference](../images/pass_by_reference.png)
+![pass_by_reference](../images/pass_by_reference.PNG)
 
 - 객체를 가리키는 변수(원본, person)를 다른 변수(사본, copy)에 할당하면 원본의 `참조값`이 복사되어 전달된다.
 - 이를 `참조에 의한 전달(pass by reference)`이라 한다.
