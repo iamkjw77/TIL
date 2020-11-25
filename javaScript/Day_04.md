@@ -27,7 +27,7 @@
 
 - 객체는 프로퍼티와 메서드로 구성된 집합체이다.
 - 객체는 상태와 동작을 모두 포함할 수 있으므로, 상태와 동작을 하나의 단위로 구조화할 수 있어 유용하다.
-- `프로퍼티` : 객체의 상태를 나타내는 `값(data)`
+- `프로퍼티` : 객체의 `상태`를 나타내는 값(data)
 - `메서드` : 프로퍼티(상태 데이터)를 참조하고 조작할 수 있는 `동작(behavior)`
 - 자바스크립트 언어는 멀티 패러다임 언어(절차 지향형 + 객체 지향형 + 함수형 다되는 프로그래밍 언어)
 
@@ -63,7 +63,7 @@
 - 반대로, 식별자 네이밍 규칙을 따르지 않는 이름에는 반드시 따옴표를 사용해야 한다.
 <br />
 
-![property_key](../images/property_key.PNG)
+![property_key](../images/propery_key.PNG)
 
 - 자바스크립트 엔진은 따옴표를 생략한 last-name은 –연산자가 있는 표현식으로 해석한다. (따옴표를 안쓰면 SyntaxError)
 <br />
@@ -113,6 +113,7 @@ console.log(person.age); //undefined
 - `person.last-name`을 실행할 때 자바스크립트 엔진은 먼저 person.last를 평가한다. person 객체에는 last인 프로퍼티가 없으므로 person.last는 `undefined`로 평가된다. 따라서 `person.last-name`은 `undefined – name`과 같다. 다음으로 자바스크립튼 엔진은 name이라는 식별자를 찾는다. 이때 name은 프로퍼티 키가 아니라 식별자로 해석된다.
 - Node.js 환경에서는 현재 어디에도 name이라는 식별자(변수, 함수 등의 이름) 선언이 없으므로 “ReferenceError: name is not defined” 에러가 발생한다.
 - 브라우저 환경에서는 name이라는 전역변수가 암묵적으로 존재한다. 전역변수 name은 창(전역 객체 window의 프로퍼티)의 이름을 가리키며, 기본값은 빈 문자열이다. 따라서 `person.last-name`은 `undefined - ‘’` 과 같으므로 `NaN`이 된다.
+- 객체에 없는 프로퍼티 키를 참조하면 `undefined`가 출력된다.
 
 #### 프로퍼티 삭제
 - `delete` 연산자는 프로퍼티를 삭제한다. 이때 delete 연산자의 피연산자는 프로퍼티 값에 접근할 수 있는 표현식이어야 한다.
