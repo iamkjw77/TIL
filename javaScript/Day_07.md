@@ -118,7 +118,7 @@ console.log(bar); // ReferenceError: bar is not defined
 - let 키워드로 선언한 변수는 “선언 단계”와 “초기화 단계”가 분리되어 진행된다.
 - 런타임 이전에 자바스크립트 엔진에 의해 암묵적으로 선언 단계가 먼저 실행되지만, 초기화 단계는 변수 선언문에 도달했을 때 실행된다.
 - 만약 초기화 단계 이전에 변수에 접근하려고 하면 참조 에러(ReferenceError)가 발생한다.
-- let 키워드로 선언한 변수는 스코프의 시작지점부터 초기화 시작 지점(변수 선언문)까지 변수를 참조할 수 없다.
+- let 키워드로 선언한 변수는 스코프의 시작지점부터 초기화 시작 지점(`변수 선언문`)까지 변수를 참조할 수 없다.
 - 스코프 시작지점부터 초기화 시작 시점까지 변수를 참조할 수 없는 구간을 `일시적 사각지대(Temporal Dead Zone; TDZ)`라고 부른다.
 
 ```javascript
@@ -127,6 +127,7 @@ console.log(bar); // ReferenceError: bar is not defined
 console.log(foo); // ReferenceError: foo is not defined
 
 let foo; // 변수 선언문에서 초기화 단계가 실행된다.
+// foo는 선언문 이후부터 유효하다.
 console.log(foo); // undefined
 
 foo = 1;
@@ -147,6 +148,8 @@ let foo = 1; // 전역 변수
 ```
 - let 키워드로 선언한 변수의 경우, 호이스팅이 발생하지 않았다면 위 예제는 전역변수 foo의 값을 출력해야 한다. 
 - 하지만, let 키워드로 선언한 변수도 호이스팅이 발생하기 때문에 참조에러(ReferenceError)가 발생한다.
+- 런타임 이전에 let으로 선언한 변수는 무언가 값이 존재하지만 무엇인지는 알 수 없다.(ECMAScript 사양에도 나와있지 않다.)
+- 그 안이 빈 상태라면 error가 발생할 수 없다. 따라서 무언가 값이 있지만 알 수 없다.
 
 - 자바스크립트 ES6에서 도입된 let, const를 포함해서 모든 선언(var, let, const, function, funciton*, class 등)을 호이스팅한다.
 - 단, ES6에서 도입된 `let, const, class`를 사용한 선언문은 `호이스팅이 발생하지 않은 것처럼 동작`한다.
@@ -175,6 +178,7 @@ console.log(y); // 2
 console.log(window.foo); // f foo() {}
 // 전역객체 window의 프로퍼티는 전역변수처럼 사용할 수 있다.
 consol.log(foo); // f foo() {}
+console.log(window.foo === foo); // true
 ```
 - let 키워드로 선언한 전역변수는 전역 객체의 프로퍼티가 아니다.
 - let 전역변수는 보이지 않는 개념적인 블록(전역 렉시컬 환경의 선언적 환경 레코드) 내에 존재하게 된다.
@@ -184,6 +188,7 @@ let x = 1;
 // let, const 키워드로 선언한 전역변수는 전역객체 window의 프로퍼티가 아니다. 
 console.log(window.x); // undefined
 console.log(x); // 1
+console.log(window.x === x); // false
 ```
 
 const 키워드

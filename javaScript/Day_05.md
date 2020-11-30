@@ -438,6 +438,17 @@ console.log(multifly(3, 5)); // undefined
 - 반환문은 함수 몸체 내부에서만 사용할 수 있다. `전역에서 반환문을 사용하면 문법 에러`(SyntaxError: Illegal return statement)가 발생한다.
 - 참고로 Node.js는 모듈 시스템에 의해 파일별로 독립적인 파일 스코프를 갖는다. 따라서 Node.js 환경에서는 파일의 가장 바깥 영역에 반환문을 사용해도 에러가 발생하지 않는다.
 
+```javascript
+var returnOfIIFE = (function () {
+	var v1 = 'get me out!'
+	console.log(v1);
+})();
+
+console.log(returnOfIIFE); // 'get me out!' undefined
+// v1이 출력, 반환이 아님, 반환은 undefined
+```
+- `console.log()`는 console 객체의 log 메서드를 말하며, log 메서드가 호출되면, 인수로 전달된 표현식을 콘솔에 출력한다. 함수 리턴값과 무관한다.
+
 #### 참조에 의한 전달과 외부 상태의 변경
 - `원시값`은 `값에 의한 전달(pass by value)`, `객체`는 `참조에 의한 전달(pass by reference)`
 - 매개변수도 함수 몸체 내부에서 변수와 동일하게 취급되므로 매개변수 또한 타입에 따라 값에 의한 전달, 참조에 의한 전달 방식을 그대로 따른다.
@@ -566,7 +577,7 @@ function foo() {
 	// ...
 })(); // 추천
 
-!funtion () {
+!function () {
 	console.log(‘hi’);
 }(); 
 // ‘hi’, true 출력(return 값이 없으므로 암묵적으로 undefined 할당, !undefined = true)
@@ -804,7 +815,7 @@ console.log(res); // 6
 5. `순수함수(pure function)와 비순수함수(impure function)`
 - `순수 함수(pure function)` : 어떤 외부 상태에 의존하지 않고 변경하지도 않는, 즉 `부수효과가 없는 함수`
 - `비순수 함수(impure function)` : 외부 상태에 의존하거나 외부 상태를 변경하는, 즉, `부수효과가 있는 함수`
-- 순수함수는 동일한 인수가 전달되면 언제나 동일한 값을 반환하는 함수
+- 순수함수는 `동일한 인수가 전달되면 언제나 동일한 값`을 반환하는 함수
 - 순수함수는 어떤 외부 상태에도 의존하지 않고 오직 매개변수를 통해 함수 내부로 전달된 인수에게만 의존해 반환값을 만든다.
 - 객체의 매서드는 기본적으로 비순수함수다.(프로퍼티 값을 상태변경하면 외부 값도 바뀌기 때문)
 ```javascript
@@ -813,6 +824,7 @@ var count = 0;
 // 순수함수
 function increase(n) {
 	return ++n;
+	// 인수가 전달되면 언제나 +1된 값을 반환함
 }
 
 // 순수함수가 반환한 결과값을 변수에 재할당해서 상태를 변경
@@ -821,6 +833,30 @@ console.log(count); // 1
 
 count = increase(count);
 console.log(count); // 2
+```
+```javascript
+// 순수 함수
+// x, y값에 의존하지 않음 
+// x, y는 함수 내에서만 바꿀 수 있음 
+function add(x, y) {
+	return x + y;
+}
+
+add(2, 3);
+```
+
+```javascript
+// 비순수 함수
+// 외부 변수 x, y에 의존
+// x, y 를 바꿀 수 있는 영역이 많음(전역, 함수 내에서도 바꿀 수 있음)
+// 읽기만해도 비순수 함수가 될 수 있음
+var x = 0;
+var y = 0;
+function add() {
+	return x + y;
+}
+
+add();
 ```
 
 ```javascript
