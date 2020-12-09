@@ -31,7 +31,7 @@ console.log(x); // 10
 - 참고로 `ES6에서 도입된 클래스와 모듈은 기본적으로 strict mode가 적용`된다.
 
 #### strict mode의 적용
-- strict mode를 적용하려면 전역의 선두 또는 함수의 몸체 선두에 `‘use strict’;`를 추가한다.
+- strict mode를 적용하려면 전역의 선두 또는 함수의 몸체 선두에 `‘use strict’;`(지시어, Directive)를 추가한다.
 - 전역의 선두에 추가하면 스크립트 전체에 strict mode가 적용된다.
 ```javascript
 'use strict';
