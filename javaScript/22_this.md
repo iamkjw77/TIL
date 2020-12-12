@@ -210,6 +210,8 @@ obj.foo();
 ```
 
 - `콜백함수가 일반함수로 호출된다면` `콜백함수 내부의 this도 전역객체가 바인딩`된다.
+- 참고로, 콜백함수도 중첩함수의 일종이다. 함수 정의를 어디서 했는지에 따라 이름이 달라지는데 `정의를 밖에서 하면 콜백함수`, `안에서 하면 중첩함수`라 한다.
+- 즉, `외부 컨텍스트와 내부 컨텍스트의 this가 일치하지 않는다.` → `this의 가장 큰 문제점`
 - 어떠한 함수라도 일반함수로 호출되면 this에 전역 객체가 바인딩된다.
 
 ```javascript
@@ -230,7 +232,7 @@ const obj = {
 obj.foo();
 ```
 ##### setTimeout 함수
-- setTimeout 함수는 두 번째 인수로 전달한 시간(ms)만큼 대기한 다음, 첫 번째 인수로 전달한 콜백함수를 호출하는 타이머 함수이다. → 비동기와 관련있다.(두 번째 인수로 전달된 시간후에, 콜백함수가 브라우저에 의해 호출이 되어진다.)
+- setTimeout 함수는 두 번째 인수로 전달한 시간(ms)만큼 대기한 다음, 첫 번째 인수로 전달한 콜백함수를 호출하는 타이머 함수이다. → 비동기와 관련있다.(두 번째 인수로 전달된 시간후에, 콜백함수가 `브라우저에 의해` 호출이 되어진다.)
 - 1초 = 1000ms
 
 - `일반함수로 호출된 모든 함수(중첩함수, 콜백함수 포함) 내부의 this에는 전역객체가 바인딩된다.`
@@ -413,12 +415,32 @@ console.log(Person.prototype.getName()); // Kim
 
 4. Function.prototype.apply/call/bind 메서드에 의한 간접 호출
 - `apply, call, bind 메서드는 Function.prototype의 메서드`이다.
-- 즉, 이들 메서드는 모든 함수가 상속받아 사용할 수 있다.
+- apply, call, bind 메서드는 Function 생성자 함수가 존재하기 때문에 존재한다.
+- 즉, 이들 메서드는 `모든 함수가 상속받아 사용할 수 있다.`
+- 일반 객체에 apply, call, bind 메서드를 쓰면 TypeError가 난다.(함수 객체만 사용할 수 있다.)
 <br />
 
 ![Function.prototype 메서드](../images/function_prototype.PNG)
 
+```javascript
+function foo(a, b, c) {
+    console.log(this);
+    console.log(a + b + c);
+}
+
+const thisArg = { x: 1 };
+
+foo.call(thisArg, 1, 2, 3); // { x: 1 } 6
+foo.apply(thisArg, [1, 2, 3]); // { x: 1 } 6
+foo.bind(thisArg)(1, 2, 3); // { x: 1 } 6
+
+const f = foo.bind(thisArg);
+f(1, 2, 3); // { x: 1 } 6
+```
+
 - `Function.prototype.apply`, `Function.prototype.call` 메서드는 `this로 사용할 객체와 인수리스트를 인수로 전달 받아 함수를 호출`한다.
+- 함수 시그니처 : MDN에 표시되어 있는 아래 예시와 같은 방식 ex) `Function.prototype.apply(thisArg[, argsArray])`
+
 ```javascript
 // 주어진 this 바인딩과 인수 리스트 배열을 사용하여 함수를 호출
 // thisArg – this로 사용할 객체
@@ -469,6 +491,7 @@ console.log(getThisBinding.call(thisArg, 1, 2, 3));
 ```
 - `apply 메서드는 호출할 함수의 인수를 배열로 묶어 전달`한다.
 - `call 메서드는 호출할 함수의 인수를 쉼표로 구분한 리스트 형식으로 전달`한다.
+- call 메서드의 2번째 인수는 인수가 몇 개 올지 모르는 가변인수 메서드이다. 
 - apply, call 메서드는 호출할 함수에 인수를 전달하는 방식만 다를 뿐 `this로 사용할 객체를 전달하면서 함수를 호출하는 것은 동일`하다.
 
 - apply와 call 메서드의 대표적인 용도는 `arguments 객체와 같은 유사 배열 객체의 메서드를 사용하는 것`이다.
@@ -482,12 +505,24 @@ function convertArgsToArray() {
   const arr = Array.prototype.slice.call(arguments);
   // const arr = Array.prototype.slice.apply(arguments);
 
-  console.log(arr);
-
   return arr;
 }
 
 convertArgsToArray(1, 2, 3); // [1, 2, 3]
+```
+```javascript
+// ES6에서 call을 사용하지 않고 유사배열객체를 배열로 변경하는 방법
+// 방법1
+function sum () {
+    return [ ...arguments ].reduce((p, c) => p + c, 0);
+}
+
+// 방법2
+function sum( ...args ) {
+    return args.reduce((p, c) => p + c, 0);
+}
+
+console.log(sum(1, 2, 3)); // 6
 ```
 
 - `Function.prototype.bind 메서드`는 apply와 call 메서드와 달리 `함수를 호출하지 않고 this로 사용할 객체만 전달`한다.
@@ -524,6 +559,7 @@ person.foo(function () {
 - person.foo 콜백함수가 호출되기 이전인 ①의 시점에서 this는 foo 메서드를 호출한 객체, 즉 person 객체를 가리킨다.
 - 하지만, person.foo 콜백함수가 일반함수로서 호출된 ②의 시점에서 this는 전역객체 window를 가리킨다.
 - person.foo의 콜백함수는 외부함수 person.foo를 돕는 헬퍼함수(보조함수)의 역할을 하기 때문에 `외부함수 person.foo 내부의 this와 콜백함수 내부의 this가 상이하면 문맥상 문제가 발생`한다.
+- 즉, 일반함수가 constructor 이면서 일반함수로서도 호출될 수 있어서 this 문제가 발생한다.
 - 따라서 `콜백함수 내부의 this를 외부함수 내부의 this와 일치시켜 주어야한다.` `이때 bind 메서드를 사용하여 this를 일치시킬 수 있다.`
 ```javascript
 const person = {
@@ -537,6 +573,38 @@ const person = {
 person.foo(function () {
   console.log(this.name); // Lee
 });
+```
+
+```javascript
+const Person = (function () {
+    
+    function Person(name) {
+        this.name = name;
+    }
+
+    Person.prototype.sayHi = function () {
+        setTimeout(function () {
+            console.log(`Hi! ${this.name}`);
+        }.bind(this), 1000);
+        // 첫 번째 인수인 콜백함수 내에 return 값을 안주면 undefined 반환
+        // setTimeout 메서드는 브라우저에 의해 콜백함수가 호출되므로 call, apply는 쓸 수 없다.
+    };
+
+    return Person;
+}());
+
+const me = new Person('Lee');
+me.sayHi(); // (1초 후) Hi! Lee 출력
+```
+- bind 메서드는 ES6이상에서는 잘 쓰지 않는다.
+- ES6이상에서는 화살표함수를 쓰면 this 문제가 해결된다.
+
+```javascript
+Person.prototype.sayHi = function () {
+        setTimeout(() => {
+            console.log(`Hi! ${this.name}`);
+        }, 1000);
+};
 ```
 
 | 함수 호출 방식                                             | this 바인딩                                                  |
