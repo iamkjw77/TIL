@@ -2,7 +2,6 @@
 <details open>
 <summary>Number</summary>
 <div markdown="28">
-
 <br />
 
 - 표준 빌트인 객체(standard built-in object)인 Number는 원시 타입인 숫자를 다룰 때 유용한 프로퍼티와 메서드를 제공한다.
@@ -29,7 +28,7 @@ numObj = new Number('Hello');
 console.log(numObj); // Number {[[PrimitiveValue]]: NaN}
 ```
 - new 연산자를 사용하지 않고 Number 생성자 함수를 호출하면 Number 인스턴스가 아닌 숫자를 반환한다.
-- 이를 이용하여 명시적으로 타입을 변환하기도 한다.
+- 이를 이용하여 `명시적으로 타입을 변환하기도 한다.`
 ```javascript
 // 문자열 타입 => 숫자 타입
 Number('0'); // 0
@@ -44,9 +43,10 @@ Number(false); // 0
 ##### Number.EPSILON
 - ES6에서 도입된 Number.EPSILON은 1과 1보다 큰 숫자 중에서 가장 작은 숫자와의 차이와 같다.
 - Number.EPSILON은 약 2.2204460492503130808472633361816 x 10-16이다.
+- `입실론: 정수와 다음 정수사이의 간극`
 
 - 부동소수점 산술 연산은 정확한 값을 기대하기 어렵다.
-- 정수는 2진법으로 오차 없이 저장할 수 있지만, 부동소수점을 표현하기 위해 가장 널리 쓰이는 표준이 IEEE 754는 2진법으로 변환 시 무한소수가 되어 미세한 오차가 발생할 수밖에 없는 구조적 한계를 갖는다.
+- 정수는 2진법으로 오차 없이 저장할 수 있지만, 부동소수점을 표현하기 위해 가장 널리 쓰이는 표준이 IEEE 754는 2진법으로 변환 시 무한소수가 되어 미세한 오차가 발생할 수밖에 없는 구조적 한계를 갖는다.(`소수를 2진수로 바꾸는 경우 바이트에 손상이 가서 정확한 계산이 안된다.`)
 ```javascript
 0.1 + 0.2; // 0.30000000000000004
 0.1 + 0.2 === 0.3; // false
@@ -60,6 +60,8 @@ function isEqual(a, b) {
 }
 
 isEqual(0.1 + 0.2, 0.3); // true
+// 0.30000000000000004 - 0.3 = 0.00000000000000004
+// 0.00000000000000004, 이 값은 입실론보다 작으므로 같은 수로 인정한다. 
 ```
 ##### Number.MAX_VALUE
 - Number.MAX_VALUE는 자바스크립트에서 표현할 수 있는 가장 큰 양수 값(1.7976931348623157 x 10308)이다.
@@ -70,7 +72,7 @@ Infinity > Number.MAX_VALUE; // true
 ```
 
 ##### Number.MIN_VALUE
-- Number.MIN_VALUE는 자바스크립트에서 표현할 수 있는 가장 작은 양수 값(5 x 10-324)이다.
+- Number.MIN_VALUE는 자바스크립트에서 표현할 수 있는 가장 작은 양수 값(5 x 10의 -324승)이다.
 - Number.MIN_VALUE보다 작은 숫자는 0이다. 
 ```javascript
 Number.MIN_VALUE; // 5e-324
@@ -112,7 +114,7 @@ Number.NAN; // NaN
 - 사용 빈도가 높은 Number 메서드에 대해 살펴보자.
 
 ##### Number.isFinite
-- ES6에서 도입된 Number.isFinite 정적 메서드는 인수로 전달된 숫자 값이 정상적인 유한수, 즉 Infinity 또는 –Infinity가 아닌지 검사하여 그 결과를 불리언 값으로 변환한다.
+- ES6에서 도입된 Number.isFinite 정적 메서드는 인수로 전달된 숫자 값이 정상적인 `유한수`, 즉 Infinity 또는 –Infinity가 아닌지 검사하여 그 결과를 불리언 값으로 변환한다.
 ```javascript
 Number.isFinite(0); // true
 Number.isFinite(Number.MAX_VALUE); // true
@@ -126,8 +128,8 @@ Number.isFinite(-Infinity); // false
 Number.isFinite(NaN); // false
 ```
 - Number.isFinite 메서드는 빌트인 전역함수 isFinite와 차이가 있다.
-- 빌트인 전역함수 isFinite는 전달받은 인수를 숫자로 암묵적 타입 변환하여 검사를 수행하지만, Number.isFinite는 전달받은 인수를 숫자로 암묵적 타입 변환하지 않는다.
-- 따라서 숫자가 아닌 인수가 주어졌을 때 반환값은 언제나 false이다.
+- `빌트인 전역함수 isFinite는 전달받은 인수를 숫자로 암묵적 타입 변환하여 검사를 수행하지만, Number.isFinite는 전달받은 인수를 숫자로 암묵적 타입 변환하지 않는다.`
+- `따라서 숫자가 아닌 인수가 주어졌을 때 반환값은 언제나 false이다.`
 ```javascript
 Number.isFinite(null); // false
 isFinite(null); // true
@@ -165,7 +167,7 @@ isNaN(undefined); // true
 
 ##### Number.isSafeInteger
 - ES6에서 도입된 Number.isSafeInteger 정적 메서드는 인수로 전달된 숫자값이 안전한 정수인지 검사하여 그 결과를 불리언 값으로 반환한다.
-- 안전한 정수값은 -(253-1)와 253-1 사이의 정수값이다.
+- 안전한 정수값은 -(2의 53승 -1)와 2의 53승 -1 사이의 정수값이다.
 - 검사 전에 인수를 숫자로 암묵적 타입 변환하지 않는다.
 ```javascript
 // true
@@ -181,11 +183,11 @@ Number.isSafeInteger(Infinity);
 ```
 
 ##### Number.prototype.toExponential
-- toExponential 메서드는 숫자를 지수 표기법으로 변환하여 문자열로 반환한다.
+- toExponential 메서드는 숫자를 `지수 표기법으로 변환하여 문자열로 반환한다.`
 - 지수 표기법이란 매우 크거나 작은 숫자를 표기할 때 주로 사용하며 e(exponent) 앞에 있는 숫자에 10의 n승을 곱하는 형식으로 수를 나타내는 방식이다.
 - 인수로 소수점 이하로 표현할 자리수를 전달할 수 있다.
 ```javascript
-(77.1234).toExponential(); // "7.71234e+1", 7.71234 * 101과 같다.
+(77.1234).toExponential(); // "7.71234e+1", 7.71234 * 10의 1승과 같다.
 (77.1234).toExponential(4); // "7.7123e+1"
 (77.1234).toExponential(2); // "7.71e+1"
 ```
@@ -195,7 +197,7 @@ Number.isSafeInteger(Infinity);
 ```
 - 숫자 뒤에 .은 의미가 모호하다.
 - 부동소수점 숫자의 경우 소수 구분 기호일 수도 있고 객체 프로퍼티에 접근하기 위한 프로퍼티 접근 연산자일 수도 있다.
-- 자바스크립트 엔진은 숫자 뒤에 .을 부동소수점 숫자의 소수 구분 기호로 해석한다.
+- 자바스크립트 엔진은 `숫자 뒤에 .을 부동소수점 숫자의 소수 구분 기호로 해석한다.`
 - 그러나 `77.toExponential()`에서 77은 Number 래퍼 객체이다.
 - 따라서 77뒤의 .을 소수 구분 기호로 해석하면 뒤에 이어지는 toExponential을 프로퍼티로 해석할 수 없으므로 에러가 발생한다.
 ```javascript
@@ -215,8 +217,8 @@ Number.isSafeInteger(Infinity);
 ```
 
 ##### Number.prototype.toFixed
-- toFixed 메서드는 숫자를 반올림하여 문자열로 반환한다.
-- 반올림하는 소수점 이하 자리수를 나타내는 0~20 사이의 정수값을 인수로 전달할 수 있다.
+- toFixed 메서드는 숫자를 `반올림하여 문자열로 반환한다.`
+- 반올림하는 소수점 이하 자리수를 나타내는 0 ~ 20 사이의 정수값을 인수로 전달할 수 있다.
 - 인수를 생략하면 기본값 0이 지정된다.
 ```javascript
 (12345.6789).toFixed(); // “123456”
@@ -226,7 +228,7 @@ Number.isSafeInteger(Infinity);
 ```
 
 ##### Number.prototype.toPrecision
-- toPrecision 메서드는 인수로 전달받은 전체 자리수까지 유효하도록 나머지 자리수를 반올림하여 문자열로 반환한다.
+- toPrecision 메서드는 인수로 전달받은 전체 자리수까지 유효하도록 `나머지 자리수를 반올림하여 문자열로 반환한다.`
 - 인수로 전달받은 전체 자리수로 표현할 수 없는 경우 지수 표기법으로 결과를 반환한다.
 - 전체 자리수를 나타내는 0~21 사이의 정수값을 인수로 전달할 수 있다.
 - 인수를 생략하면 기본값 0이 지정된다.
@@ -239,7 +241,7 @@ Number.isSafeInteger(Infinity);
 
 ##### Number.prototype.toString
 - toString 메서드는 숫자를 문자열로 변환하여 반환한다.
-- 진법을 나타내는 2~36 사이의 정수값을 인수로 전달할 수 있다.
+- 진법을 나타내는 2 ~ 36 사이의 정수값을 인수로 전달할 수 있다.
 - 인수를 생략하면 기본값 10진법이 지정된다.
 ```javascript
 (10).toString(); // "10"
