@@ -223,6 +223,7 @@ target.match(regexp); // ["A", "AA", "BB", "ZZ", "A", "B"]
 const target = 'AA BB Aa Bb 12';
 
 const regexp = /[A-Za-z]+/g;
+// const regExp = /[A-Z]+/gi;
 
 target.match(regexp); // ["AA", "BB", "Aa", "Bb"]
 ```
