@@ -25,7 +25,7 @@ console.log(strObj);
 // String {0: "L", 1: "e", 2: "e", length: 3, [[PrimitiveValue]]: "Lee"}
 console.log(strObj[0]); // L
 ```
-- String 래퍼 객체는 배열과 마찬가지로 length 프로퍼티와 인덱스를 나타내는 숫자 형식의 문자열을 프로퍼티 키로, 각 문자를 값으로 갖는 유사 배열 객체이면서 이터러블이다.
+- `String 래퍼 객체`는 배열과 마찬가지로 `length 프로퍼티`와 인덱스를 나타내는 숫자 형식의 문자열을 프로퍼티 키로, 각 문자를 값으로 갖는 `유사 배열 객체이면서 이터러블이다.`
 - 따라서 배열과 유사하게 인덱스를 사용하여 각 문자에 접근할 수 있다.
 
 - 단, 문자열은 원시값이므로 변경할 수 없다.
@@ -45,7 +45,7 @@ console.log(strObj);
 // String {0: "n", 1: "u", 2: "l", : "l", length: 4, [[PrimitiveValue]]: "null"}
 ```
 - new 연산자를 사용하지 않고 String 생성자 함수를 호출하면 String 인스턴스가 아닌 문자열을 반환한다.
-- 이를 이용하여 명시적으로 타입을 변환하기도 한다.
+- 이를 이용하여 `명시적으로 타입을 변환`하기도 한다.
 ```javascript
 // 숫자 타입 => 문자열 타입
 String(1); // "1"
@@ -68,7 +68,7 @@ String(false); // "false"
 
 #### String 메서드
 - String 객체에는 원본 String 래퍼 객체를 직접 변경하는 메서드는 존재하지 않는다.
-- 즉, String 객체의 메서드는 언제나 새로운 문자열을 반환한다.
+- 즉, `String 객체의 메서드는 언제나 새로운 문자열을 반환한다.`
 - 문자열은 변경 불가능(immutable)한 원시값이기 때문에 String 래퍼 객체도 읽기 전용(read only) 객체로 제공된다.
 ```javascript
 const strObj = new String('Lee');
@@ -119,7 +119,7 @@ if (str.includes('Hello')) {
 ```
 
 ##### String.prototype.search
-- search 메서드는 대상 문자열에서 인수로 전달받은 정규 표현식과 매치하는 문자열을 검색하여 일치하는 문자열의 인덱스를 반환한다.
+- search 메서드는 대상 문자열에서 인수로 전달받은 `정규 표현식과 매치하는 문자열을 검색하여 일치하는 문자열의 인덱스를 반환`한다.
 - 검색에 실패하면 –1을 반환한다.
 ```javascript
 const str = 'Hello World';
@@ -129,7 +129,7 @@ str.search(/x/); // -1
 ```
 
 ##### String.prototype.includes
-- ES6에서 도입된 includes 메서드는 대상 문자열에 인수로 전달받은 문자열이 포함되어 있는지 확인하여 그 결과를 true 또는 false로 반환한다.
+- ES6에서 도입된 includes 메서드는 대상 문자열에 인수로 전달받은 `문자열이 포함되어 있는지 확인하여 그 결과를 true 또는 false로 반환`한다.
 ```javascript
 const str = 'Hello World';
 
@@ -169,7 +169,7 @@ const str = 'Hello World';
 str.endsWith('ld'); // true
 str.endsWith('x'); // false
 ```
-- endsWith 메서드의 2번째 인수로 검색할 문자열의 길이를 전달할 수 있다.
+- endsWith 메서드의 2번째 인수로 검색할 `문자열의 길이`를 전달할 수 있다.
 ```javascript
 const str = 'Hello World';
 
@@ -192,7 +192,7 @@ for (let i = 0; i < str.length; i++) {
 str.charAt(30); // ''
 ```
 ##### String.prototpye.substring
-- substring 메서드는 대상 문자열에서 첫 번째 인수로 전달받은 인덱스에 위치하는 문자부터 두 번째 인수로 전달받은 인덱스에 위치하는 문자의 바로 이전 문자까지의 부분 문자열을 반환한다.
+- substring 메서드는 대상 문자열에서 첫 번째 인수로 전달받은 인덱스에 위치하는 문자부터 두 번째 인수로 전달받은 인덱스에 위치하는 문자의 바로 이전 문자까지의 `부분 문자열을 반환`한다.
 ```javascript
 const str = 'Hello World';
 
@@ -301,7 +301,7 @@ str.repeat(-1); // RangeError: Invalid count value
 ```
 
 ##### String.prototype.replace
-- replace 메서드는 대상 문자열에서 첫 번째 인수로 전달받은 문자열 또는 정규표현식을 검색하여 두 번째 인수로 전달한 문자열로 치환한 문자열을 반환한다.
+- replace 메서드는 대상 문자열에서 `첫 번째 인수로 전달받은 문자열 또는 정규표현식을 검색하여 두 번째 인수로 전달한 문자열로 치환한 문자열을 반환`한다.
 ```javascript
 const str = 'Hello world';
 
@@ -318,7 +318,8 @@ str.replace('world', 'Lee'); // 'Hello Lee world'
 ```javascript
 const str = 'Hello world';
 
-// $& => 검색된 문자열
+// $& => 검색된 문자열을 의미(여기서는 world)
+// world를 찾아서 태그를 붙여줌
 str.replace('world', '<strong>$&</strong>');
 ```
 ```javascript
@@ -335,7 +336,7 @@ const str = 'Hello world';
 str.replace(/hello/gi, 'Lee'); // 'Lee world'
 ```
 - replace 메서드의 두 번째 인수로 치환 함수를 전달할 수 있다.
-- replace 메서드는 첫 번째 인수로 전달한 문자열 또는 정규 표현식에 매치된 결과를 두 번째 인수로 전달한 치환 함수의 인수로 전달하면서 호출하고 치환 함수가 반환한 결과와 매치 결과를 치환한다.
+- replace 메서드는 첫 번째 인수로 전달한 문자열 또는 정규 표현식에 `매치된 결과를 두 번째 인수로 전달한 치환 함수의 인수로 전달`하면서 호출하고 치환 함수가 반환한 결과와 매치 결과를 치환한다.
 - 예를 들어, 카멜 케이스를 스네이크 케이스로, 스네이크 케이스를 카멜 케이스로 변경하는 함수는 다음과 같다. 
 ```javascript
 function camelToSnake(camelCase) {
@@ -385,6 +386,16 @@ function reverseString(str) {
 }
 
 reverseString('Hello world!'); // '!dlrow olleH'
+```
+
+- 각자리 숫자 더하기
+```javascript
+const num = 1234;
+
+// 숫자 => 문자 형변환 후, 배열로 만들고, 형변환하여 더한다.
+const sum = n => (n + '').split('').reduce((acc, cur) => acc + (+cur), 0);
+
+console.log(sum(num)); // 10
 ```
 
 </div> 
