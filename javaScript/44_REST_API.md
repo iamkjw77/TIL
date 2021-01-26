@@ -200,11 +200,11 @@ xhr.send();
 // 받는 처리
 xhr.onreadystatechange = () => {
   if (xhr.readyState !== XMLHttpRequest.DONE) return;
-  if (xhr.state === 200) {
+  if (xhr.status === 200) {
     console.log(JSON.parse(xhr.response));
   } else {
     // 404 페이지로 이동하는 등의 에러처리
-    console.error(xhr.state);
+    console.error(xhr.status);
   }
 };
 ```
@@ -218,10 +218,10 @@ xhr.send();
 
 // 받는 처리
 xhr.onload = () => {
-  if (xhr.state === 200) {
+  if (xhr.status === 200) {
     console.log(JSON.parse(xhr.response));
   } else {
-    console.error(xhr.state);
+    console.error(xhr.status);
   }
 };
 ```
