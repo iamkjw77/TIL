@@ -10,6 +10,8 @@
 
 - 즉, `REST는 HTTP를 기반으로 클라이언트가 서버의 리소스에 접근하는 방식을 규정한 아키텍처이고, REST API는 REST를 기반으로 서비스 API를 구현한 것을 의미한다.`
 
+- REST API는 프론트엔드와 백엔드 간에 하나의 컨벤션이다.
+
 ### REST API의 구성
 - `REST API는 자원(resource), 행위(verb), 표현(representations)의 3가지 요소로 구성된다.`
 - REST는 자체 표현 구조(self-descriptiveness)로 구성되어 REST API만으로 HTTP 요청의 내용을 이해할 수 있다.
@@ -28,6 +30,7 @@
 - `URI는 리소스를 표현하는 데 중점을 두어야 한다.`
 - 리소스를 식별할 수 있는 이름은 동사보다는 `명사`를 사용한다.
 - 따라서 이름에 get 같은 행위에 대한 표현이 들어가서는 안 된다.
+- URL(end point)는 서버가 짓는다.
 ```javascript
 # bad
 GET /getTodos/1
@@ -60,6 +63,10 @@ DELETE /todos/1
 ```
 
 ### JSON Server를 사용한 REST API 실습
+- 백엔드의 일이 완료된 상태에서 일을 하는 것이 좋다.
+- 하지만 보통 일을 시작하면 같이 시작하기 때문에 서버가 없는 동안 가짜 서버를 이용해 테스트 한다.
+- 그 가짜서버는 프론트엔드가 만드는 것이다.
+
 - HTTP 요청을 전송하고 응답을 받으려면 서버가 필요하다.
 - JSON Server를 사용해 가상 REST API 서버를 구축하여 HTTP 요청을 전송하고 응답을 받는 실습을 진행해보자.
 
@@ -73,6 +80,8 @@ DELETE /todos/1
 - 자신이 작성한 패키지를 공개할 수도 있고 필요한 패키지를 검색하여 재사용할 수도 있다.
 
 - 터미널에서 다음과 같은 명령어를 입력하여 JSON Server를 설치한다.
+- ※주의: 패키지 이름과 폴더이름이 같으면 에러가 난다. ex) json-server 폴더
+
 ```javascript
 $ mkdir json-server-exam && cd json-server-exam
 $ npm init -y
@@ -82,6 +91,11 @@ $ npm install json-server --save-dev
 #### db.json 파일 생성
 - 프로젝트 루트 폴터(/json-server-exam)에 다음과 같이 db.json 파일을 생성한다.
 - db.json 파일은 리소스를 제공하는 데이터베이스 역할을 한다.
+- 위 예제의 todos는 DB의 하나의 테이블이다.
+- db.json의 todos 이름이 바뀌면 URL의 이름도 바뀐다.
+ex) http://localhost:3000/todos
+
+- todo로 이름이 바뀌면 http://localhost:3000/todo로 바뀐다.
 ```javascript
 {
   "todos": [
@@ -130,13 +144,88 @@ $ json-server --watch db.json --port 5000
   }
 }
 ```
+- 백엔드가 완성된 시점에는 devDependencies의 json-server는 필요없다.
+
 - 터미널에서 `npm strart` 명령어를 입력하여 JSON Server를 실행한다.
 ```javascript
 $ npm start
-```
+``` 
 
 #### GET 요청
 - `todos 리소스에서 모든 todos를 취득(index)한다.`
+
+- 파일은 서버에 존재해야 하고, 서버는 파일을 서브하는 것이다.(서버의 가장 기본적인 기능)
+- 서버는 파일만 제공하지 않고, 데이터를 동적으로 생성해서 그 데이터를 줄 수도 있다. ex) DB에 없는 데이터를 만들어 달라고 요청한 경우
+
+- 그 서버는 루트 디렉토리(public)에 존재해야 한다.
+- json 서버는 express로 동작하는데 루트 디렉토리 설정이 없으면 public을 루트 폴더로 생각한다.
+
+- 만약 public 폴더 안에 index.html을 만들고, URL에 localhost:3000을 입력하면 서버에서 index.html 파일을 준다.
+- html 파일만 요청할 수 있는 것은 아니고, index.html에서 css파일을 만나면 브라우저가 서버에게 css파일을 요청한다.
+- public 폴더 안에 index.html, style.css, app.js를 만들고, index.html에 style.css, app.js를 연결해보자.
+- 그리고 주소창을 사용해서 요청하지 않고 코드로 요청해보자.
+```javascript
+// public/app.js
+
+// 보내는 처리
+const xhr = new XMLHttpRequest();
+xhr.open('GET', '/todos');
+xhr.send();
+
+// 받는 처리
+xhr.onreadystatechange = () => {
+  console.log(xhr.readyState); // 2 3 4
+};
+```
+```javascript
+// 주소창을 사용해서 요청하지 않고 코드로 요청하는 방법
+
+const xhr = new XMLHttpRequest();
+// 받는 처리
+xhr.onreadystatechange = () => {
+  console.log(xhr.readyState); // 1 2 3 4
+};
+
+// 보내는 처리
+xhr.open('GET', '/todos');
+xhr.send();
+```
+```javascript
+const xhr = new XMLHttpRequest();
+
+// 보내는 처리
+xhr.open('GET', '/todos');
+xhr.send();
+
+// 받는 처리
+xhr.onreadystatechange = () => {
+  if (xhr.readyState !== XMLHttpRequest.DONE) return;
+  if (xhr.state === 200) {
+    console.log(JSON.parse(xhr.response));
+  } else {
+    // 404 페이지로 이동하는 등의 에러처리
+    console.error(xhr.state);
+  }
+};
+```
+```javascript
+const xhr = new XMLHttpRequest();
+
+// 보내는 처리
+xhr.open('GET', '/todos');
+// '/todos'를 REST API라고 한다.
+xhr.send();
+
+// 받는 처리
+xhr.onload = () => {
+  if (xhr.state === 200) {
+    console.log(JSON.parse(xhr.response));
+  } else {
+    console.error(xhr.state);
+  }
+};
+```
+- localhost:3000에 접속해 콘솔 창을 확인해보자.
 
 - JSON Server의 루트 폴더(/json-server-exam)에 public 폴더를 생성하고 JSON Server를 중단한 후 재실행한다.
 - 그리고 public 폴더 다음 get_index.html을 추가하고 브라우저에 `http://localhost:3000/get_index.html`로 접속한다.
@@ -164,6 +253,10 @@ $ npm start
 </body>
 </html>
 ```
+- 200번 대는 성공, 400, 500 번대는 에러이다.
+- 400번대 에러는 요청을 잘못했을 때 발생하는 에러이다.
+- 500번대 에서는 서버에서 문제가 있을 때 발생하는 에러이다.
+
 <br />
 
 ![GET 요청(index)](../images/get.PNG)
@@ -326,7 +419,7 @@ $ npm start
     const xhr = new XMLHttpRequest();
 
     // todos 리소스에서 id를 사용하여 todo를 삭제한다.
-    xhr.open('PATCH', '/todos/4');
+    xhr.open('DELETE', '/todos/4');
 
     xhr.send();
 
@@ -344,6 +437,21 @@ $ npm start
 <br />
 
 ![DELETE 요청](../images/put.PNG)
+
+- 재사용 가능하도록 함수로 만들어 호출할 수도 있다.
+```javascript
+```
+
+- [same origin과 cors 에러](https://velog.io/@yejinh/CORS-4tk536f0db)
+
+- 데이터를 가져오는 서버와 데이터가 있는 서버가 보통은 같다.
+- 이런 경우 path만 적어주면 된다. ex) todos/
+- 하지만 포스트 맨을 이용하는 경우 자바스크립트에서 데이터를 가져오는 것은 다른 서버이다.
+- 그래서 이 경우에는 서버의 pull path를 적어줘야한다. ex)localhost:3000/todos
+
+- 만약 cors가 막히면 cors 에러가 뜨면서 데이터를 가져올 수 없다.
+- 이런 경우, 백엔드에게 cors를 풀어달라고 요청해야 한다.
+- [교차 출처 리소스 공유, cors](https://developer.mozilla.org/ko/docs/Web/HTTP/CORS)
 
 </div>
 </details>
