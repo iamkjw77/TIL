@@ -438,8 +438,58 @@ xhr.onload = () => {
 
 ![DELETE 요청](../images/put.PNG)
 
+- json 서버는 왜 전체 데이터를 주지않고, 변한 데이터만 줄까?
+- 아주 최소한의 데이터만 주겠다는 정책이다.
+- 랜선을 타고다니는 데이터가 작으면 작을수록 빠르고, 성능도 좋기 때문이다.
+- 상황에 따라 전체 데이터를 받는 것이 좋은 경우가 있고, 하나의 데이터만 받는 것이 좋은 경우가 있다.
+
+- 만약, 데이터를 요청 보낼 때 실수 할 수도 있기 때문에 전체를 받는 것이 안전할 수도 있다.
+- 전체 데이터가 매우 크다면 페이지네이션을 통해 한 페이지에 표시할 양만큼만 가져오면된다. 
+
 - 재사용 가능하도록 함수로 만들어 호출할 수도 있다.
 ```javascript
+// 이 파일을 하나의 모듈로 빼면된다.(하나의 기능)
+
+// return 객체와 req 함수가 따로 있으면, return 객체를 쓰지 않고 req 함수를 쓸 수가 있다.
+// 그래서 같이 묶어주어야 한다.
+const ajax = (() => {
+  // payload는 옵션이므로 가장 마지막에 준다.
+  const req = (method, url, sucessCallback, failureCallback, payload) => {
+    const xhr = new XMLHttpRequest();
+    xhr.open(method, url);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(JSON.stringify(payload));
+
+    xhr.onload = () => {
+      if (xhr.status === 200 || xhr.status === 201) {
+        sucessCallback(JSON.parse(xhr.response));
+      } else {
+        failureCallback(xhr.status);
+      }
+    };
+  };
+  return {
+    get(url, sucessCallback, failureCallback) {
+      req('GET', url, sucessCallback, failureCallback);
+    },
+    post(url, payload, successCallback, failureCallback) {
+      req('POST', payload, successCallback, failureCallback);
+    },
+    put(url, payload, successCallback, failureCallback) {
+      req('PUT', url, payload, successCallback, failureCallback);
+    },
+    patch(url, payload, successCallback, failureCallback) {
+      req('PATCH', payload, successCallback, failureCallback);
+    },
+    delete(url, successCallback, failureCallback) {
+      req('DELETE', successCallback, failureCallback);
+    }
+  };
+})();
+
+// 후속 처리를 위해 콜백함수를 주어야한다.
+// 프로미스의 필요성(프로미스를 사용하면 콜백함수를 주지 않아도 된다)
+ajax.get('/todos', console.log, console.error);
 ```
 
 - [same origin과 cors 에러](https://velog.io/@yejinh/CORS-4tk536f0db)
@@ -453,6 +503,16 @@ xhr.onload = () => {
 - 이런 경우, 백엔드에게 cors를 풀어달라고 요청해야 한다.
 - [교차 출처 리소스 공유, cors](https://developer.mozilla.org/ko/docs/Web/HTTP/CORS)
 
+- 우리가 사용한 json 서버는 patch 작업에서 url을 `/todos`라고 주고, 전체 데이터를 모두 `completed: false`로 주면 전부 다 바꿔주지 않는다.
+- 따라서 REST API를 하나 만들어 주는 작업이 가장좋다.
+
+- json 서버에서 기본으로 제공하는 기능 외에 다른 기능을 만들어주고 싶은 경우 커스텀 라우터를 통해 만들어 주어야한다.
+- [커스텀 라우터](https://poiemaweb.com/json-server)
+- 하지만, 커스텀 라우터를 만들다보면, 우리가 간단하게 가짜 서버를 만드는 것이 낫다.
+
+### express를 이용한 가짜 서버 만들기
+1. 프로젝트 폴더 만들기
+- 
 </div>
 </details>
 
