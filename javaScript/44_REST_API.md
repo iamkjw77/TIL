@@ -510,9 +510,31 @@ ajax.get('/todos', console.log, console.error);
 - [커스텀 라우터](https://poiemaweb.com/json-server)
 - 하지만, 커스텀 라우터를 만들다보면, 우리가 간단하게 가짜 서버를 만드는 것이 낫다.
 
-### express를 이용한 가짜 서버 만들기
+### express를 이용한 가짜 서버 만들기(express_server_practice 레포 참고)
+
 1. 프로젝트 폴더 만들기
-- 
+2. `$ npm init -y`
+3. `$ npm i express`
+4. `$ npm i cors` : 데이터를 가지고 있지 않은 서버에서 데이터를 가져와도 cors에러가 나지 않도록
+5. server.js 파일 만들기
+6. server.js 내용 작성하기
+7. package.json scripts 고치기("start": "node server")
+8. npm start 해보기(server.js에 app.listen에 작성한 console.log 내용이 터미널에 나오면 성공)
+9. public 폴더를 만들고, index.html 작성
+10. server.js에 public을 루트 폴더로 하는 코드 작성
+11. 서버를 재동작하고 index.html의 내용이 나오는지 확인
+12. index.html 내용을 바꾸면 계속 재구동 해야하는 번거로움을 없애기 위해 nodemon 설치
+13. npm i -g nodemon(안되면 sudo npm i -g nodemon)
+14. 설치 후, package.json scripts 고치기("start": "nodemon server")
+15. 이제 실제로 데이터를 전달할 수 있는 REST API 만들기(server.js에 작성)
+
+- 예시
+```javascript
+app.get('/todos', (req, res) => {
+  res.send(todos);
+}) 
+```
+
 </div>
 </details>
 
