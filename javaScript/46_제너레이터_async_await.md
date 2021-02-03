@@ -347,6 +347,7 @@ co(function* fetchTodo() {
 ```
 
 ### async/await
+- async/await는 IE를 지원하지 않는다.
 - 제너레이터를 사용해서 비동기 처리를 동기 처리처럼 동작하도록 구현했지만 코드가 무척이나 장황해지고 가독성이 나빠졌다.
 - `ES8(ECMAScript 2017)에서는 제너레이터보다 간단하고 가독성 좋게 비동기 처리를 동기 처리처럼 동작하도록 구현할 수 있는 async/await가 도입되었다.`
 
@@ -371,6 +372,8 @@ fetchTodo();
 #### async 함수
 - `await 키워드는 반드시 async 함수 내부에서 사용해야 한다.`
 - `async 함수는` async 키워드를 사용해 정의하며 `언제나 프로미스를 반환한다.`
+- 따라서 async 함수의 리턴값을 가지고 일을 하지말고, async 함수 내부에서 일을 다 끝내자. 
+- undefined를 리턴하더라도 undefined를 프로미스를 래핑한 프로미스를 반환한다.
 - async 함수가 명시적으로 프로미스를 반환하지 않더라도 async 함수는 암묵적으로 반환값을 resolve하는 프로미스를 반환한다.
 ```javascript
 // async 함수 선언문
@@ -426,7 +429,7 @@ const getGithubUserName = async id => {
 
 getGithubUserName('iamkjw77');
 ```
-- await 키워드는 프로미스가 settled 상태가 될 때까지 대기한다고 했다.
+- await 키워드는 프로미스가 settled 상태가 될 때까지 대기한다고 했다.(제너레이터를 이용)
 - 따라서 fetch 함수가 수행한 HTTP 요청에 대한 서버의 응답이 도착해서 fetch 함수가 반환한 프로미스가 settled 상태가 될 때까지 대기하게 된다.
 - 이후 `프로미스가 settled 상태가 되면 프로미스가 resolve한 처리 결과가 res 변수에 할당된다.`
 
@@ -488,6 +491,8 @@ try {
 ```
 - `async/await에서 에러 처리는 try...catch 문을 사용할 수 있다.`
 - 콜백 함수를 인수로 전달받는 비동기 함수와는 달리 `프로미스를 반환하는 비동기 함수는 명시적으로 호출할 수 있기 때문에 호출자가 명확하다.`
+- 따라서 async/await을 사용하면 try...catch를 꼭 사용하자.
+
 ```javascript
 const fetch = require('node-fetch');
 
@@ -525,6 +530,7 @@ foo()
   .catch(console.error); // TypeError: Failed to fetch
 ```
 
+- async/await을 사용하면 비동기 함수를 동기 함수처럼 사용할 수 있고, try/catch 문도 사용할 수 있다.
 </div> 
 </details>
 
