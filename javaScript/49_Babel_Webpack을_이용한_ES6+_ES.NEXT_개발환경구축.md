@@ -22,6 +22,15 @@
 - `ESM을 사용하더라도 트랜스파일링이나 번들링이 필요한 것은 변함이 없다.`
 - `ESM이 아직 지원하지 않는 기능(bare import 등)이 있고 점차 해결되고는 있지만, 아직 몇 가지 이슈가 존재한다.`([ECMAScript modules in browsers 참고](https://jakearchibald.com/2017/es-modules-in-browsers/))
 
+```javascript
+import axios from 'axios' // bare import
+```
+- bare import는 ESM에서 지원하지 않는다.
+- 그래서 pull path를 적어주어야 한다.
+
+- 많은 제약사항이 있어서 지금 상황에서는 ESM을 사용하기에는 무리가 있다.
+- 따라서 Babel과 Webpack을 사용하는 것이 좋다.
+
 - `트랜스파일러(transpiler)인 Babel`과 `모듈 번들러(module bundler)인 Webpack`을 이용하여 ES6+/ES.NEXT 개발 환경을 구축해보자.
 - 아울러 Webpack을 통해 Babel을 로드하여 ES6+/ES.NEXT 사양의 소스코드를 IE 같은 구형 브라우저에서도 동작하도록 ES5 사양의 소스코드로 트랜스파일링하는 방법도 알아보자.
 
@@ -254,6 +263,8 @@ Uncaught ReferenceError: exports is not defined
 main.js:3 Uncaught ReferenceError: require is not defined
     at main.js:3
 ```
+- 즉, require 같은 명령어는 브라우저에서 알지 못한다.
+
 - 브라우저의 ES6 모듈(ESM)을 사용하도록 Babel을 설정할 수도 있으나 앞서 설명한 바와 같이 ESM을 사용하는 것은 문제가 있다.
 - `Webpack을 통해 이러한 문제를 해결해보자.`
 
@@ -265,7 +276,7 @@ main.js:3 Uncaught ReferenceError: require is not defined
 
 ![Webpack](../images/Webpack.PNG)
 
-- Webpack과 Babel을 이요하여 ES6+/ES.NEXT 개발 환경을 구축해보자.
+- Webpack과 Babel을 이용하여 ES6+/ES.NEXT 개발 환경을 구축해보자.
 - `Webpack이 자바스크립트 파일을 번들링하기 전에 Babel을 로드하여 ES6+/ES.NEXT 사양의 소스코드를 ES5 사양의 소스코드로 트랜스파일링하는 작업을 실행하도록 설정할 것이다.`
 
 #### Webpack 설치
@@ -294,6 +305,11 @@ $ npm install --save-dev webpack webpack-cli
 
 #### babel-loader 설치
 - Webpack이 모듈을 번들링할 때 Babel을 사용하여 ES6+/ES.NEXT 사양의 소스코드를 트랜스파일링 하도록 `babel-loader`를 설치한다.
+
+- Babel로 트랜스파일링, Webpack으로 번들링한다면 명령어를 2번시켜야 한다.
+- 따라서 명령어를 한 번만 할 수 있게, Webpack에서 명령을 주어서 Webpack에서 Babel의 트랜스파일링을 하도록 만들어야한다.
+- 그 과정을 해주는 것이 `babel-loader`이다.
+
 ```javascript
 $ npm install --save-dev babel-loader
 ```
@@ -325,6 +341,7 @@ $ npm install --save-dev babel-loader
 ```javascript
 module.exports = {
   // entry file
+  // 애플리케이션이 가동되면 제일 처음 어떤 자바스크립트가 가동되어야 하는지 설정
   // https://webpack.js.org/configuration/entry-context/#entry
   entry: './src/js/main.js',
   // 번들링된 js 파일의 이름(filename)과 저장될 경로(path)를 지정
@@ -358,6 +375,8 @@ module.exports = {
   mode: 'development'
 };
 ```
+- 마지막에 배포할 때 `mode: produnction`으로 설정하면, 주석과 스페이스가 제거된다.
+
 - 이제 Webpack을 실행하여 트랜스파일링 및 번들링을 실행해보자.
 - `트랜스파일링은 Babel이 수행하고 번들링은 Webpack이 수행한다.`
 - 만약 이전에 실행시킨 빌드 명령이 실행 중인 상태라면 중지시키고 다시 다음 명령을 실행한다.
@@ -515,6 +534,9 @@ webpack 5.15.0 compiled successfully in 1543 ms
 
 ![추가된 폴리필](../images/polyfill.PNG)
 
+- 가짜 서버에서 Webpack을 사용하는 경우, 개발은 src 폴더에서 한다.
+- src 코드를 빌드할 때(트랜스파일링, 번들링 할 때) public이 output이다.
+- 즉, index.html도 public 안에 존재해야한다. 
 </div> 
 </details>
 
