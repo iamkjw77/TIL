@@ -132,7 +132,7 @@
 - `git flow init` : flow 설치
   <br />
 
-![git flow 시작](../images/git_flow.PNG)
+![git flow 시작](../images/git_flow.png)
 
 - `git flow feature start 기능이름` : 지금부터 기능개발 시작
   ex) `git flow feature start style-init` // 지금부터 `style-init` 기능개발시작, 자동으로 `feature/style-init`으로 이동
