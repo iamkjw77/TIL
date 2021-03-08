@@ -60,7 +60,7 @@
 - 즉, 가상돔과 실제 돔을 비교해서 바뀐 것이 있을 때만, 업데이트 한다.
   <br />
 
-![React 앱(웹 환경)](../images/react_env.GIF)
+![React 앱(웹 환경)](../images/react_env.gif)
 
 - Virtual DOM → Render to DOM
 
