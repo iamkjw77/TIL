@@ -87,6 +87,7 @@ $ npx serve –s build
 
 #### TDD(테스트 주도 개발) 개발
 
+- TDD 개발방식은 먼저 기준을 만들고, 그 다음에 요소를 만들어 테스트 한다.
 - React Testing Library는 Jest를 기반으로 UI 테스트를 지원해주는 DOM Testing Library에 React Component를 위한 API들이 추가된 것이다.
 - `getBy*` 등의 query를 통해 요소를 찾고 이벤트를 발생(`fireEvent`)시키고 `expect` function을 통해 예측한 결과대로 이루어지는지 확인한다.
 - CRA를 사용할 경우 환경구축은 이미 다 되어있다.
