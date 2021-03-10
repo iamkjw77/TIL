@@ -297,6 +297,12 @@ export default Button;
 
 - React 17버전 이상인 경우, import React from ‘react’를 쓰지 않아도 작동한다.
 - auto-import: ctrl + space 누르면 자동으로 import문이 적용된다.
+- 기본 CRA가 아닌 커스터마이징된 템플릿을 가져올 수 있다.
+
+```javascript
+$ npm create-react-app <프로젝트 이름> --template <템플릿 이름>
+$ npx create-react-app my-project --template ko
+```
 
 </div> 
 </details>
