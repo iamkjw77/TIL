@@ -293,6 +293,157 @@ export default Button;
 - React 세계관에서 함수형과 클래스 컴포넌트는 유사하지만, 클래스 컴포넌트의 경우 함수형 컴포넌트에 없는 기능을 추가적으로 사용할 수 있다는 점이 다르다.
 - 하지만 React 훅의 등장(v16.8)으로 클래스 컴포넌트만 가지고 있던 기능을 함수 컴포넌트에서도 사용할 수 있게 되었다.
 
+**컴포넌트 렌더링**
+
+- 지금까지는 JSX를 사용해 React 요소를 생성했다.
+- 하지만 JSX만으로는 "관리자", "로그아웃" React 요소를 생성만 할 수 있을 뿐, 유사한 코드를 비효율적으로 반복하게 된다.
+
+```javascript
+const adminButtonElement = (
+  <button type="button" className="button button__admin">
+    관리자
+  </button>
+);
+
+const signOutButtonElement = (
+  <button type="button" className="button button__signOut">
+    로그아웃
+  </button>
+);
+```
+
+- 반면 컴포넌트를 사용하면 효율적으로 코드를 재사용 할 수 있다.
+
+```javascript
+const adminButtonElement = <Button act="admin">관리자</Button>;
+const signOutButtonElement = <Button act="signOut">로그아웃</Button>;
+```
+
+- React 컴포넌트를 JSX 구문을 사용해 다른 컴포넌트 내부의 자식(children)으로 중첩(nested)하면 React 가상 DOM Tree 노드(Node)로 렌더링된다.
+
+```javascript
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+// Button 컴포넌트 불러오기
+import Button from './components/Button';
+
+// App 함수 컴포넌트
+const App = () => (
+  <div className="app">
+    <Button act="signOut">로그아웃</Button>
+    <Button act="admin">관리자</Button>
+  </div>
+);
+
+ReactDOM.render(<App />, document.getElementById('root'));
+```
+
+- 현재 작성된 컴포넌트 트리(React 가상 DOM Tree)를 그려보면 다음과 같은 구조를 가지게된다.
+
+```javascript
+App
+├── Button
+└── Button
+```
+
+**전달 속성(props)**
+
+- React는 컴포넌트로부터 생성된 요소(JSX)를 발견하면 JSX 구문에 전달된 속성과 자식을 해당 컴포넌트에 `단일 객체`로 전달한다.
+- 이 객체가 `props`이다.
+- `JSX는 Babel 컴파일러에 의해 React.createElement()구문으로 변환된다.`
+
+```javascript
+const adminButtonElement = <Button act="admin">관리자</Button>;
+const signOutButtonElement = <Button act="signOut">로그아웃</Button>;
+```
+
+```javascript
+const adminButtonElement = React.createElement(
+  // Button 컴포넌트 (함수 또는 클래스)
+  Button,
+  // props 객체
+  {
+    act: 'admin',
+    children: ['관리자'],
+  }
+);
+
+const signOutButtonElement = React.createElement(Button, {
+  act: 'signOut',
+  children: ['로그아웃'],
+});
+```
+
+- JSX 구문으로부터 전달받은 속성객체 `props`는 컴포넌트 내부에 전달되어 렌더링 과정에 활용된다.
+
+```javascript
+import { Component } from 'react';
+
+export default class Button extends Component {
+  render() {
+    // this.props 객체 → { type, act, children, ... }
+    const { type, act, children } = this.props;
+
+    type = type ?? 'button';
+
+    return (
+      <button type={type} className={`button button__${act}`}>
+        {chilren}
+      </button>
+    );
+  }
+}
+```
+
+- `전달된 속성은 읽기 전용(readonly)`
+- 컴포넌트에 전달된 속성 객체는 `읽기 전용`이다.
+- 즉, 전달된 속성값을 컴포넌트에서 수정할 수 없다.
+- 전달된 속성값은 수정할 수 없지만, 컴포넌트 자신의 상태(state)는 수정가능하다.
+
+**컴포넌트 트리(Tree)**
+
+- 포함된 컴포넌트는 `자식 컴포넌트`, 그리고 포함하는 컴포넌트는 `부모 컴포넌트`가 된다.
+
+```javascript
+<App>
+  <NavBar />
+  <Profile />
+  <Trends />
+  <Feed>
+    <Tweet />
+    <Like />
+  </Feed>
+</App>
+```
+
+<br />
+
+![컴포넌트 트리 구조](../images/component_tree.PNG)
+
+**데이터 흐름**
+
+- 컴포넌트가 상위(부모) 컴포넌트로부터 전달 받은 속성(props)은 공유된 "데이터"이다.
+- React는 `단방향 데이터 흐름(one-way data flow)` 방식을 사용해 앱의 데이터를 공유하고, 데이터 흐름은 `하향식(Top Down 방식)`으로 흐른다.
+  <br />
+
+![React의 데이터 흐름](../images/react_data_flow.PNG)
+
+**컴포넌트 추출**
+
+- 이미 작성된 컴포넌트 내부에서 컴포넌트를 사용할 수 있는 것이 보인다면 분리하는 것이 좋다.
+- 컴포넌트 구조가 복잡한 경우, 요청사항에 따라 변경이 까다로울 수 있고 각 부품을 재사용하기도 어렵다.
+- 이런 경우 컴포넌트를 작게 나눠 사용하는 용도로 구분해 개발하는 것이 좋다.
+
+- `단일 책임 원칙(single responsibility principle)`
+- 컴포넌트를 나눠 추출하는 것은 재사용 가능한 컴포넌트를 분리 관리 함에 따라 앱의 규모가 커질수록 개발에 드는 비용을 줄이고, 효율성을 높일 수 있다.
+- 컴포넌트는 `한 가지의 작업만 하는 것이 이상적이다.`
+- 컴포넌트는 `규모가 커진다면` 작은 서브 컴포넌트들로 `분리`되어야 한다.
+
+- `컴포넌트 원칙(component principle)`
+- 컴포넌트는 `배포할 수 있는 가장 작은 단위`를 말하며, 마치 벽돌들을 쌓아 방의 구조를 설계하는 것과 같다.
+- 컴포넌트를 설계하는 원칙의 핵심은 `변하지 않는 것`과 `변하는 것들`로 쪼개고 서로가 `서로에게 미치는 영향이 크지 않도록 설계하는 것`이다.
+
 ##### 팁
 
 - React 17버전 이상인 경우, import React from ‘react’를 쓰지 않아도 작동한다.
